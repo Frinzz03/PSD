@@ -25,64 +25,44 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import pymysql
-import pandas as pd
-from tabulate import tabulate
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
-# Konfigurasi koneksi ke database Aiven MySQL
-host = "mysql23-112-irismysql23-112.h.aivencloud.com"
-port = 15786
-user = "avnadmin"
-password = "AVNS_cTNd4CUt1kk0Z7MPIC1"
-database = "defaultdb"
+# Pisahkan fitur dan target
+X = df.drop(columns=['Sequence','class'])
 
-# Buat koneksi
-mysql_conn = pymysql.connect(
-    host=host,
-    port=port,
-    user=user,
-    password=password,
-    database=database,
-    ssl={'ssl': {}}  # Jika menggunakan SSL
-)
+# Lakukan PCA ke 2 dimensi
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
 
-def fetch_mysql_data():
-    try:
-        conn = pymysql.connect(**mysql_config)
-        cursor = conn.cursor()
-        query = 'SELECT * FROM ecolipsd.ecoli_data;'
-        cursor.execute(query)
-        data = cursor.fetchall()
-        columns = [desc[0] for desc in cursor.description]
-        cursor.close()
-        conn.close()
-        df = pd.DataFrame(data, columns=columns)
+# Buat DataFrame hasil PCA
+df_pca = pd.DataFrame(X_pca, columns=["PC1", "PC2"])
+df_pca["class"] = df["class"]  # tambahkan class untuk label warna
 
-        return df
-    except pymysql.err.OperationalError as e:
-        print(f"Error connecting to MySQL: {e}")
-        return pd.DataFrame()
+# Scatter plot
+plt.figure(figsize=(8,6))
+for c in df_pca["class"].unique():
+    subset = df_pca[df_pca["class"] == c]
+    plt.scatter(subset["PC1"], subset["PC2"], label=c, alpha=0.7)
 
+plt.title("PCA Scatter Plot (Ecoli Data)")
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.legend()
+plt.show()
 
-df = fetch_mysql_data()
-print(tabulate(df, headers='keys', tablefmt='grid'))
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipython-input-4037184172.py[0m in [0;36m<cell line: 0>[0;34m()[0m
-[1;32m     38[0m [0;34m[0m[0m
-[1;32m     39[0m [0;34m[0m[0m
-[0;32m---> 40[0;31m [0mdf[0m [0;34m=[0m [0mfetch_mysql_data[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     41[0m [0mprint[0m[0;34m([0m[0mtabulate[0m[0;34m([0m[0mdf[0m[0;34m,[0m [0mheaders[0m[0;34m=[0m[0;34m'keys'[0m[0;34m,[0m [0mtablefmt[0m[0;34m=[0m[0;34m'grid'[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/tmp/ipython-input-1882665241.py[0m in [0;36m<cell line: 0>[0;34m()[0m
+[1;32m      4[0m [0;34m[0m[0m
+[1;32m      5[0m [0;31m# Pisahkan fitur dan target[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 6[0;31m [0mX[0m [0;34m=[0m [0mdf[0m[0;34m.[0m[0mdrop[0m[0;34m([0m[0mcolumns[0m[0;34m=[0m[0;34m[[0m[0;34m'Sequence'[0m[0;34m,[0m[0;34m'class'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      7[0m [0;34m[0m[0m
+[1;32m      8[0m [0;31m# Lakukan PCA ke 2 dimensi[0m[0;34m[0m[0;34m[0m[0m
 
-[0;32m/tmp/ipython-input-4037184172.py[0m in [0;36mfetch_mysql_data[0;34m()[0m
-[1;32m     22[0m [0;32mdef[0m [0mfetch_mysql_data[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     23[0m     [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 24[0;31m         [0mconn[0m [0;34m=[0m [0mpymysql[0m[0;34m.[0m[0mconnect[0m[0;34m([0m[0;34m**[0m[0mmysql_config[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     25[0m         [0mcursor[0m [0;34m=[0m [0mconn[0m[0;34m.[0m[0mcursor[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     26[0m         [0mquery[0m [0;34m=[0m [0;34m'SELECT * FROM ecolipsd.ecoli_data;'[0m[0;34m[0m[0;34m[0m[0m
-
-[0;31mNameError[0m: name 'mysql_config' is not defined
+[0;31mNameError[0m: name 'df' is not defined
 
