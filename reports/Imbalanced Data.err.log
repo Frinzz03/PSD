@@ -25,53 +25,64 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from imblearn.over_sampling import ADASYN
-from collections import Counter
+import pymysql
+import pandas as pd
+from tabulate import tabulate
 
-# Data preparation
-nt = X.copy()
-ns = y.copy()
+# Konfigurasi koneksi ke database Aiven MySQL
+host = "mysql23-112-irismysql23-112.h.aivencloud.com"
+port = 15786
+user = "avnadmin"
+password = "AVNS_cTNd4CUt1kk0Z7MPIC1"
+database = "defaultdb"
 
-print("Distribusi awal:", Counter(ns))
+# Buat koneksi
+mysql_conn = pymysql.connect(
+    host=host,
+    port=port,
+    user=user,
+    password=password,
+    database=database,
+    ssl={'ssl': {}}  # Jika menggunakan SSL
+)
 
-class_counts = Counter(ns)
-print("Class counts:", class_counts)
+def fetch_mysql_data():
+    try:
+        conn = pymysql.connect(**mysql_config)
+        cursor = conn.cursor()
+        query = 'SELECT * FROM ecolipsd.ecoli_data;'
+        cursor.execute(query)
+        data = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+        cursor.close()
+        conn.close()
+        df = pd.DataFrame(data, columns=columns)
 
-# Urutkan kelas dari yang paling sedikit ke paling banyak
-sorted_classes = sorted(class_counts.items(), key=lambda x: x[1])
-print("Sorted classes by count:", sorted_classes)
+        return df
+    except pymysql.err.OperationalError as e:
+        print(f"Error connecting to MySQL: {e}")
+        return pd.DataFrame()
 
-# Coba ADASYN bertahap untuk kelas minoritas
-for i, (cls, count) in enumerate(sorted_classes[:-1]):  # Skip kelas mayoritas
-    if count > 1:  # Hanya untuk kelas dengan cukup samples
-        n_neighbors = min(5, count - 1)  # Pastikan n_neighbors aman
 
-        print(f"\n📊 Processing class '{cls}' (count: {count}) with n_neighbors={n_neighbors}")
-
-        try:
-            adasyn = ADASYN(
-                n_neighbors=n_neighbors,
-                sampling_strategy={cls: count + 10}  # Naikkan 10 sampel
-            )
-            nt, ns = adasyn.fit_resample(nt, ns)
-            print(f"✅ Success for class '{cls}'")
-            print(f"   New distribution: {Counter(ns)}")
-        except Exception as e:
-            print(f"❌ Failed for class '{cls}': {e}")
-            continue
-
-print(f"\n🎯 Final distribution: {sorted(Counter(ns).items())}")
+df = fetch_mysql_data()
+print(tabulate(df, headers='keys', tablefmt='grid'))
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipython-input-3269223312.py[0m in [0;36m<cell line: 0>[0;34m()[0m
-[1;32m      4[0m [0;31m# Data preparation[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0mnt[0m [0;34m=[0m [0mX[0m[0;34m.[0m[0mcopy[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 6[0;31m [0mns[0m [0;34m=[0m [0my[0m[0;34m.[0m[0mcopy[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      7[0m [0;34m[0m[0m
-[1;32m      8[0m [0mprint[0m[0;34m([0m[0;34m"Distribusi awal:"[0m[0;34m,[0m [0mCounter[0m[0;34m([0m[0mns[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/tmp/ipython-input-4037184172.py[0m in [0;36m<cell line: 0>[0;34m()[0m
+[1;32m     38[0m [0;34m[0m[0m
+[1;32m     39[0m [0;34m[0m[0m
+[0;32m---> 40[0;31m [0mdf[0m [0;34m=[0m [0mfetch_mysql_data[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     41[0m [0mprint[0m[0;34m([0m[0mtabulate[0m[0;34m([0m[0mdf[0m[0;34m,[0m [0mheaders[0m[0;34m=[0m[0;34m'keys'[0m[0;34m,[0m [0mtablefmt[0m[0;34m=[0m[0;34m'grid'[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mNameError[0m: name 'y' is not defined
+[0;32m/tmp/ipython-input-4037184172.py[0m in [0;36mfetch_mysql_data[0;34m()[0m
+[1;32m     22[0m [0;32mdef[0m [0mfetch_mysql_data[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     23[0m     [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 24[0;31m         [0mconn[0m [0;34m=[0m [0mpymysql[0m[0;34m.[0m[0mconnect[0m[0;34m([0m[0;34m**[0m[0mmysql_config[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     25[0m         [0mcursor[0m [0;34m=[0m [0mconn[0m[0;34m.[0m[0mcursor[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     26[0m         [0mquery[0m [0;34m=[0m [0;34m'SELECT * FROM ecolipsd.ecoli_data;'[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mNameError[0m: name 'mysql_config' is not defined
 
