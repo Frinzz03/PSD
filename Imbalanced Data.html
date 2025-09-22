@@ -1,0 +1,1449 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Imbalanced Data &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Imbalanced Data';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Preprocessing Data" href="Data%20Preprocessing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to my website
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Bussiness%20Understanding.html"><strong>Business Understanding : Dataset Iris</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Memahami%20Data%20dengan%20Tools%20Power%20BI.html"><strong>Memahami Data dengan Tools Power BI</strong></a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Memahami%20Data%20dengan%20Script%20Python.html"><strong>Memahami Data dengan Script Python</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data%20Preprocessing.html"><strong>Preprocessing Data</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Imbalanced Data</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FImbalanced Data.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Imbalanced Data.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Imbalanced Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tugas">Tugas :</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-ecoli-yang-disimpan-di-mysql">Ambil data Ecoli yang disimpan di MySQL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-data">Visualisasi data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-data-yang-diimbangkan-dengan-pca">Visualisasi Data yang Diimbangkan dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ploting-data-dari-data-yang-diimbangkan-menggunakan-pca-tandai-data-data-hasil-generatenya">Ploting data dari data yang diimbangkan menggunakan PCA, tandai data data hasil generatenya</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="imbalanced-data">
+<h1><strong>Imbalanced Data</strong><a class="headerlink" href="#imbalanced-data" title="Link to this heading">#</a></h1>
+<p>Imbalanced data (data tak berimbang) adalah kondisi dalam dataset klasifikasi di mana jumlah data dari satu kelas (kelas mayoritas) jauh lebih banyak dibandingkan kelas lain (kelas minoritas). Ketidakseimbangan ini dapat membuat model machine learning menjadi bias, karena lebih cenderung memprediksi kelas mayoritas dan mengabaikan kelas minoritas yang seringkali lebih penting dalam kasus tertentu, seperti deteksi penyakit langka atau penipuan.</p>
+<section id="tugas">
+<h2>Tugas :<a class="headerlink" href="#tugas" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Download dataset ecoli dari UCI <a class="reference external" href="https://archive.ics.uci.edu/dataset/39/ecoli">https://archive.ics.uci.edu/dataset/39/ecoli</a></p></li>
+<li><p>Simpan didatabase MySQL</p></li>
+<li><p>Tampilkan data dalam scatter plot  menggunakan PCA.
+PCA mentransformasi data menjadi dimensi rendah (2)</p></li>
+<li><p>Lakukan penyeimbangan data menggunakan ADASYN</p></li>
+<li><p>Ploting data dari data yang diimbangkan menggunakan PCA, tandai data data hasil generatenya</p></li>
+</ol>
+</section>
+<section id="ambil-data-ecoli-yang-disimpan-di-mysql">
+<h2>Ambil data Ecoli yang disimpan di MySQL<a class="headerlink" href="#ambil-data-ecoli-yang-disimpan-di-mysql" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pymysql</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pymysql
+  Downloading pymysql-1.1.2-py3-none-any.whl.metadata (4.3 kB)
+Downloading pymysql-1.1.2-py3-none-any.whl (45 kB)
+?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.3 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.3/45.3 kB</span> <span class=" -Color -Color-Red">1.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pymysql
+Successfully installed pymysql-1.1.2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabulate</span><span class="w"> </span><span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="c1"># Konfigurasi koneksi ke database Aiven MySQL</span>
+<span class="n">mysql_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql23-112-irismysql23-112.h.aivencloud.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;avnadmin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;AVNS_cTNd4CUt1kk0Z7MPIC1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;database&quot;</span><span class="p">:</span> <span class="s2">&quot;defaultdb&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">15786</span>
+<span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fetch_mysql_data</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">mysql_config</span><span class="p">)</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;SELECT * FROM ecolipsd.ecoli_data;&#39;</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">desc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">except</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">err</span><span class="o">.</span><span class="n">OperationalError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error connecting to MySQL: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">fetch_mysql_data</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;keys&#39;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;grid&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|     | Sequence   |   mcg |   gvh |   lip |   chg |   aac |   alm1 |   alm2 | class   |
++=====+============+=======+=======+=======+=======+=======+========+========+=========+
+|   0 | AAS_ECOLI  |  0.44 |  0.52 |  0.48 |   0.5 |  0.43 |   0.47 |   0.54 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   1 | AAT_ECOLI  |  0.49 |  0.29 |  0.48 |   0.5 |  0.56 |   0.24 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   2 | ACEA_ECOLI |  0.07 |  0.4  |  0.48 |   0.5 |  0.54 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   3 | ACEK_ECOLI |  0.56 |  0.4  |  0.48 |   0.5 |  0.49 |   0.37 |   0.46 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   4 | ACKA_ECOLI |  0.59 |  0.49 |  0.48 |   0.5 |  0.52 |   0.45 |   0.36 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   5 | ADI_ECOLI  |  0.23 |  0.32 |  0.48 |   0.5 |  0.55 |   0.25 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   6 | AGP_ECOLI  |  0.74 |  0.49 |  0.48 |   0.5 |  0.42 |   0.54 |   0.36 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   7 | ALKH_ECOLI |  0.67 |  0.39 |  0.48 |   0.5 |  0.36 |   0.38 |   0.46 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   8 | AMPD_ECOLI |  0.29 |  0.28 |  0.48 |   0.5 |  0.44 |   0.23 |   0.34 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|   9 | AMPE_ECOLI |  0.63 |  0.47 |  0.48 |   0.5 |  0.51 |   0.82 |   0.84 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  10 | AMY1_ECOLI |  0.7  |  0.61 |  0.48 |   0.5 |  0.56 |   0.52 |   0.43 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  11 | AMY2_ECOLI |  0.21 |  0.34 |  0.48 |   0.5 |  0.51 |   0.28 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  12 | APT_ECOLI  |  0.2  |  0.44 |  0.48 |   0.5 |  0.46 |   0.51 |   0.57 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  13 | ARAC_ECOLI |  0.42 |  0.4  |  0.48 |   0.5 |  0.56 |   0.18 |   0.3  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  14 | ARAE_ECOLI |  0.23 |  0.48 |  0.48 |   0.5 |  0.59 |   0.88 |   0.89 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  15 | ARAF_ECOLI |  0.66 |  0.86 |  0.48 |   0.5 |  0.34 |   0.41 |   0.36 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  16 | ARAH_ECOLI |  0.34 |  0.49 |  0.48 |   0.5 |  0.58 |   0.85 |   0.8  | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  17 | AROP_ECOLI |  0.43 |  0.4  |  0.48 |   0.5 |  0.58 |   0.75 |   0.78 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  18 | ASG1_ECOLI |  0.42 |  0.24 |  0.48 |   0.5 |  0.57 |   0.27 |   0.37 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  19 | ASG2_ECOLI |  0.73 |  0.78 |  0.48 |   0.5 |  0.58 |   0.51 |   0.31 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  20 | ATKA_ECOLI |  0.72 |  0.42 |  0.48 |   0.5 |  0.65 |   0.77 |   0.79 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  21 | ATKB_ECOLI |  0.46 |  0.61 |  0.48 |   0.5 |  0.48 |   0.86 |   0.87 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  22 | ATKC_ECOLI |  0.85 |  0.53 |  0.48 |   0.5 |  0.53 |   0.52 |   0.35 | imS     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  23 | ATP6_ECOLI |  0.27 |  0.35 |  0.48 |   0.5 |  0.51 |   0.77 |   0.79 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  24 | BCR_ECOLI  |  0.79 |  0.41 |  0.48 |   0.5 |  0.66 |   0.81 |   0.83 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  25 | BETT_ECOLI |  0.52 |  0.39 |  0.48 |   0.5 |  0.65 |   0.71 |   0.73 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  26 | BGLX_ECOLI |  0.65 |  0.57 |  0.48 |   0.5 |  0.47 |   0.47 |   0.51 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  27 | BTUB_ECOLI |  0.56 |  0.68 |  0.48 |   0.5 |  0.77 |   0.36 |   0.45 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  28 | BTUR_ECOLI |  0.25 |  0.48 |  0.48 |   0.5 |  0.44 |   0.17 |   0.29 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  29 | C562_ECOLI |  0.72 |  0.86 |  0.48 |   0.5 |  0.17 |   0.55 |   0.21 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  30 | CADB_ECOLI |  0.83 |  0.48 |  0.48 |   0.5 |  0.65 |   0.76 |   0.79 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  31 | CAFA_ECOLI |  0.39 |  0.32 |  0.48 |   0.5 |  0.46 |   0.24 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  32 | CAIB_ECOLI |  0.51 |  0.5  |  0.48 |   0.5 |  0.46 |   0.32 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  33 | CAIT_ECOLI |  0.69 |  0.43 |  0.48 |   0.5 |  0.59 |   0.74 |   0.77 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  34 | CFA_ECOLI  |  0.22 |  0.43 |  0.48 |   0.5 |  0.48 |   0.16 |   0.28 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  35 | CHEA_ECOLI |  0.25 |  0.4  |  0.48 |   0.5 |  0.46 |   0.44 |   0.52 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  36 | CHEB_ECOLI |  0.34 |  0.45 |  0.48 |   0.5 |  0.38 |   0.24 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  37 | CHEW_ECOLI |  0.44 |  0.27 |  0.48 |   0.5 |  0.55 |   0.52 |   0.58 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  38 | CHEY_ECOLI |  0.23 |  0.4  |  0.48 |   0.5 |  0.39 |   0.28 |   0.38 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  39 | CHEZ_ECOLI |  0.41 |  0.57 |  0.48 |   0.5 |  0.39 |   0.21 |   0.32 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  40 | CIRA_ECOLI |  0.65 |  0.51 |  0.48 |   0.5 |  0.66 |   0.54 |   0.33 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  41 | CN16_ECOLI |  0.67 |  0.7  |  0.48 |   0.5 |  0.46 |   0.45 |   0.33 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  42 | CODB_ECOLI |  0.29 |  0.47 |  0.48 |   0.5 |  0.71 |   0.65 |   0.69 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  43 | CPXA_ECOLI |  0.79 |  0.36 |  0.48 |   0.5 |  0.46 |   0.82 |   0.7  | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  44 | CRED_ECOLI |  0.78 |  0.33 |  0.48 |   0.5 |  0.57 |   0.77 |   0.79 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  45 | CRL_ECOLI  |  0.4  |  0.45 |  0.48 |   0.5 |  0.38 |   0.22 |   0    | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  46 | CSPA_ECOLI |  0.31 |  0.23 |  0.48 |   0.5 |  0.73 |   0.05 |   0.14 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  47 | CYDA_ECOLI |  0.55 |  0.47 |  0.48 |   0.5 |  0.57 |   0.78 |   0.8  | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  48 | CYDB_ECOLI |  0.75 |  0.37 |  0.48 |   0.5 |  0.64 |   0.7  |   0.74 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  49 | CYNR_ECOLI |  0.51 |  0.54 |  0.48 |   0.5 |  0.41 |   0.34 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  50 | CYOA_ECOLI |  0.7  |  0.39 |  1    |   0.5 |  0.51 |   0.82 |   0.84 | imL     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  51 | CYOB_ECOLI |  0.59 |  0.29 |  0.48 |   0.5 |  0.64 |   0.75 |   0.77 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  52 | CYOC_ECOLI |  0.12 |  0.67 |  0.48 |   0.5 |  0.74 |   0.58 |   0.63 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  53 | CYOD_ECOLI |  0.4  |  0.5  |  0.48 |   0.5 |  0.65 |   0.82 |   0.84 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  54 | CYOE_ECOLI |  0.67 |  0.37 |  0.48 |   0.5 |  0.54 |   0.64 |   0.68 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  55 | CYPB_ECOLI |  0.3  |  0.16 |  0.48 |   0.5 |  0.56 |   0.11 |   0.23 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  56 | CYPC_ECOLI |  0.36 |  0.39 |  0.48 |   0.5 |  0.48 |   0.22 |   0.23 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  57 | CYPH_ECOLI |  0.67 |  0.81 |  0.48 |   0.5 |  0.54 |   0.49 |   0.23 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  58 | CYSB_ECOLI |  0.29 |  0.37 |  0.48 |   0.5 |  0.48 |   0.44 |   0.52 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  59 | CYSE_ECOLI |  0.25 |  0.4  |  0.48 |   0.5 |  0.47 |   0.33 |   0.42 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  60 | CYSP_ECOLI |  0.67 |  0.61 |  0.48 |   0.5 |  0.51 |   0.37 |   0.38 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  61 | DAPD_ECOLI |  0.21 |  0.51 |  0.48 |   0.5 |  0.5  |   0.32 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  62 | DCP_ECOLI  |  0.43 |  0.37 |  0.48 |   0.5 |  0.53 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  63 | DCTA_ECOLI |  0.73 |  0.36 |  0.48 |   0.5 |  0.53 |   0.91 |   0.92 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  64 | DDLA_ECOLI |  0.43 |  0.39 |  0.48 |   0.5 |  0.47 |   0.31 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  65 | DDLB_ECOLI |  0.53 |  0.38 |  0.48 |   0.5 |  0.44 |   0.26 |   0.36 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  66 | DEOC_ECOLI |  0.34 |  0.33 |  0.48 |   0.5 |  0.38 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  67 | DGAL_ECOLI |  0.63 |  1    |  0.48 |   0.5 |  0.35 |   0.51 |   0.49 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  68 | DHG_ECOLI  |  0.84 |  0.44 |  0.48 |   0.5 |  0.48 |   0.71 |   0.74 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  69 | DHSC_ECOLI |  0.48 |  0.45 |  0.48 |   0.5 |  0.6  |   0.78 |   0.8  | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  70 | DHSD_ECOLI |  0.54 |  0.49 |  0.48 |   0.5 |  0.4  |   0.87 |   0.88 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  71 | DLDH_ECOLI |  0.56 |  0.51 |  0.48 |   0.5 |  0.34 |   0.37 |   0.46 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  72 | DMSC_ECOLI |  0.66 |  0.48 |  0.48 |   0.5 |  0.54 |   0.7  |   0.74 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  73 | DPPA_ECOLI |  0.57 |  0.59 |  0.48 |   0.5 |  0.39 |   0.47 |   0.33 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  74 | DPPB_ECOLI |  0.64 |  0.46 |  0.48 |   0.5 |  0.48 |   0.73 |   0.76 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  75 | DPPC_ECOLI |  0.48 |  0.41 |  0.48 |   0.5 |  0.51 |   0.9  |   0.88 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  76 | DSBA_ECOLI |  0.71 |  0.71 |  0.48 |   0.5 |  0.4  |   0.54 |   0.39 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  77 | DSBB_ECOLI |  0.5  |  0.66 |  0.48 |   0.5 |  0.31 |   0.92 |   0.92 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  78 | DSBC_ECOLI |  0.66 |  0.74 |  0.48 |   0.5 |  0.31 |   0.38 |   0.43 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  79 | DSBD_ECOLI |  0.76 |  0.71 |  0.48 |   0.5 |  0.5  |   0.71 |   0.75 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  80 | ECOT_ECOLI |  0.67 |  0.81 |  0.48 |   0.5 |  0.25 |   0.42 |   0.25 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  81 | ECPD_ECOLI |  0.64 |  0.72 |  0.48 |   0.5 |  0.49 |   0.42 |   0.19 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  82 | EFG_ECOLI  |  0.4  |  0.29 |  0.48 |   0.5 |  0.42 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  83 | EFTS_ECOLI |  0.24 |  0.35 |  0.48 |   0.5 |  0.31 |   0.19 |   0.31 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  84 | EFTU_ECOLI |  0.36 |  0.54 |  0.48 |   0.5 |  0.41 |   0.38 |   0.46 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  85 | EMRA_ECOLI |  0.06 |  0.61 |  0.48 |   0.5 |  0.49 |   0.92 |   0.37 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  86 | EMRB_ECOLI |  0.71 |  0.52 |  0.48 |   0.5 |  0.64 |   1    |   0.99 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  87 | ENO_ECOLI  |  0.29 |  0.52 |  0.48 |   0.5 |  0.42 |   0.29 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  88 | ENVZ_ECOLI |  0.72 |  0.46 |  0.48 |   0.5 |  0.51 |   0.66 |   0.7  | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  89 | EXBB_ECOLI |  0.47 |  0.55 |  0.48 |   0.5 |  0.58 |   0.71 |   0.75 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  90 | EXBD_ECOLI |  0.46 |  0.59 |  0.48 |   0.5 |  0.36 |   0.76 |   0.23 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  91 | FABB_ECOLI |  0.65 |  0.47 |  0.48 |   0.5 |  0.59 |   0.3  |   0.4  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  92 | FADL_ECOLI |  0.78 |  0.68 |  0.48 |   0.5 |  0.83 |   0.4  |   0.29 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  93 | FECA_ECOLI |  0.52 |  0.81 |  0.48 |   0.5 |  0.72 |   0.38 |   0.38 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  94 | FECB_ECOLI |  0.68 |  0.82 |  0.48 |   0.5 |  0.38 |   0.65 |   0.56 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  95 | FECR_ECOLI |  0.32 |  0.39 |  0.48 |   0.5 |  0.53 |   0.28 |   0.38 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  96 | FEPA_ECOLI |  0.64 |  0.57 |  0.48 |   0.5 |  0.7  |   0.33 |   0.26 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  97 | FEPB_ECOLI |  0.7  |  0.64 |  0.48 |   0.5 |  0.47 |   0.51 |   0.47 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  98 | FEPD_ECOLI |  0.84 |  0.49 |  0.48 |   0.5 |  0.55 |   0.78 |   0.74 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+|  99 | FEPG_ECOLI |  0.77 |  0.55 |  0.48 |   0.5 |  0.51 |   0.78 |   0.74 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 100 | FES_ECOLI  |  0.32 |  0.42 |  0.48 |   0.5 |  0.35 |   0.28 |   0.38 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 101 | FHUA_ECOLI |  0.63 |  0.69 |  0.48 |   0.5 |  0.65 |   0.41 |   0.28 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 102 | FHUE_ECOLI |  0.6  |  0.76 |  1    |   0.5 |  0.77 |   0.59 |   0.52 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 103 | FIMC_ECOLI |  0.63 |  0.57 |  0.48 |   0.5 |  0.49 |   0.7  |   0.2  | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 104 | FRDC_ECOLI |  0.33 |  0.56 |  0.48 |   0.5 |  0.33 |   0.78 |   0.8  | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 105 | FRDD_ECOLI |  0.64 |  0.58 |  0.48 |   0.5 |  0.48 |   0.78 |   0.73 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 106 | FTSH_ECOLI |  0.81 |  0.44 |  0.48 |   0.5 |  0.42 |   0.67 |   0.68 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 107 | FTSL_ECOLI |  0.36 |  0.45 |  0.48 |   0.5 |  0.38 |   0.79 |   0.17 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 108 | FTSN_ECOLI |  0    |  0.51 |  0.48 |   0.5 |  0.35 |   0.67 |   0.44 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 109 | FTSQ_ECOLI |  0.1  |  0.49 |  0.48 |   0.5 |  0.41 |   0.67 |   0.21 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 110 | FTSW_ECOLI |  0.54 |  0.57 |  0.48 |   0.5 |  0.56 |   0.81 |   0.83 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 111 | G3P1_ECOLI |  0.38 |  0.46 |  0.48 |   0.5 |  0.48 |   0.22 |   0.29 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 112 | G3P2_ECOLI |  0.33 |  0.45 |  0.48 |   0.5 |  0.52 |   0.32 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 113 | G6PI_ECOLI |  0.3  |  0.37 |  0.48 |   0.5 |  0.59 |   0.41 |   0.49 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 114 | GABP_ECOLI |  0.47 |  0.59 |  0.48 |   0.5 |  0.52 |   0.76 |   0.79 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 115 | GALP_ECOLI |  0.63 |  0.5  |  0.48 |   0.5 |  0.59 |   0.85 |   0.86 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 116 | GCVA_ECOLI |  0.4  |  0.5  |  0.48 |   0.5 |  0.45 |   0.39 |   0.47 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 117 | GGT_ECOLI  |  0.74 |  0.82 |  0.48 |   0.5 |  0.49 |   0.49 |   0.41 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 118 | GLNA_ECOLI |  0.28 |  0.38 |  0.48 |   0.5 |  0.5  |   0.33 |   0.42 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 119 | GLNH_ECOLI |  0.63 |  0.86 |  0.48 |   0.5 |  0.39 |   0.47 |   0.34 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 120 | GLNP_ECOLI |  0.49 |  0.42 |  0.48 |   0.5 |  0.53 |   0.79 |   0.81 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 121 | GLPD_ECOLI |  0.61 |  0.45 |  0.48 |   0.5 |  0.48 |   0.35 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 122 | GLPQ_ECOLI |  0.63 |  0.83 |  0.48 |   0.5 |  0.4  |   0.39 |   0.19 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 123 | GLPT_ECOLI |  0.31 |  0.5  |  0.48 |   0.5 |  0.57 |   0.84 |   0.85 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 124 | GLTP_ECOLI |  0.74 |  0.44 |  0.48 |   0.5 |  0.55 |   0.88 |   0.89 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 125 | GLTS_ECOLI |  0.58 |  0.6  |  0.48 |   0.5 |  0.59 |   0.73 |   0.76 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 126 | GLYA_ECOLI |  0.17 |  0.38 |  0.48 |   0.5 |  0.45 |   0.42 |   0.5  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 127 | GSHR_ECOLI |  0.44 |  0.35 |  0.48 |   0.5 |  0.55 |   0.55 |   0.61 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 128 | GT_ECOLI   |  0.43 |  0.4  |  0.48 |   0.5 |  0.39 |   0.28 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 129 | HEM6_ECOLI |  0.42 |  0.35 |  0.48 |   0.5 |  0.58 |   0.15 |   0.27 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 130 | HEMN_ECOLI |  0.23 |  0.33 |  0.48 |   0.5 |  0.43 |   0.33 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 131 | HPRT_ECOLI |  0.37 |  0.52 |  0.48 |   0.5 |  0.42 |   0.42 |   0.36 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 132 | HTRA_ECOLI |  0.63 |  0.71 |  0.48 |   0.5 |  0.6  |   0.4  |   0.39 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 133 | IF1_ECOLI  |  0.29 |  0.3  |  0.48 |   0.5 |  0.45 |   0.03 |   0.17 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 134 | IF2_ECOLI  |  0.22 |  0.36 |  0.48 |   0.5 |  0.35 |   0.39 |   0.47 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 135 | ILVY_ECOLI |  0.23 |  0.58 |  0.48 |   0.5 |  0.37 |   0.53 |   0.59 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 136 | IPYR_ECOLI |  0.47 |  0.47 |  0.48 |   0.5 |  0.22 |   0.16 |   0.26 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 137 | KAD_ECOLI  |  0.54 |  0.47 |  0.48 |   0.5 |  0.28 |   0.33 |   0.42 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 138 | KDGL_ECOLI |  0.33 |  0.45 |  0.48 |   0.5 |  0.45 |   0.88 |   0.89 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 139 | KDSA_ECOLI |  0.51 |  0.37 |  0.48 |   0.5 |  0.35 |   0.36 |   0.45 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 140 | KEFC_ECOLI |  0.63 |  0.42 |  0.48 |   0.5 |  0.48 |   0.77 |   0.8  | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 141 | KGTP_ECOLI |  0.45 |  0.4  |  0.48 |   0.5 |  0.61 |   0.74 |   0.77 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 142 | KUP_ECOLI  |  0.62 |  0.42 |  0.48 |   0.5 |  0.58 |   0.79 |   0.81 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 143 | LACY_ECOLI |  0.71 |  0.4  |  0.48 |   0.5 |  0.71 |   0.7  |   0.74 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 144 | LAMB_ECOLI |  0.67 |  0.88 |  0.48 |   0.5 |  0.73 |   0.5  |   0.25 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 145 | LEP_ECOLI  |  0.78 |  0.44 |  0.48 |   0.5 |  0.45 |   0.73 |   0.68 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 146 | LEU3_ECOLI |  0.4  |  0.35 |  0.48 |   0.5 |  0.45 |   0.33 |   0.42 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 147 | LGT_ECOLI  |  0.5  |  0.37 |  0.48 |   0.5 |  0.66 |   0.64 |   0.69 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 148 | LIVJ_ECOLI |  0.71 |  0.86 |  0.48 |   0.5 |  0.4  |   0.54 |   0.32 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 149 | LIVK_ECOLI |  0.68 |  0.78 |  0.48 |   0.5 |  0.43 |   0.44 |   0.42 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 150 | LLDP_ECOLI |  0.66 |  0.53 |  0.48 |   0.5 |  0.59 |   0.66 |   0.66 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 151 | LNT_ECOLI  |  0.6  |  0.61 |  0.48 |   0.5 |  0.54 |   0.67 |   0.71 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 152 | LON_ECOLI  |  0.44 |  0.34 |  0.48 |   0.5 |  0.3  |   0.33 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 153 | LPLA_ECOLI |  0.42 |  0.38 |  0.48 |   0.5 |  0.54 |   0.34 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 154 | LSPA_ECOLI |  0.83 |  0.37 |  0.48 |   0.5 |  0.61 |   0.71 |   0.74 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 155 | LYSP_ECOLI |  0.34 |  0.51 |  0.48 |   0.5 |  0.67 |   0.9  |   0.9  | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 156 | LYSR_ECOLI |  0.44 |  0.56 |  0.48 |   0.5 |  0.5  |   0.46 |   0.54 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 157 | MALE_ECOLI |  0.64 |  0.84 |  0.48 |   0.5 |  0.37 |   0.45 |   0.4  | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 158 | MALF_ECOLI |  0.63 |  0.54 |  0.48 |   0.5 |  0.65 |   0.79 |   0.81 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 159 | MALG_ECOLI |  0.7  |  0.4  |  0.48 |   0.5 |  0.56 |   0.86 |   0.83 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 160 | MALM_ECOLI |  0.74 |  0.47 |  0.48 |   0.5 |  0.5  |   0.57 |   0.42 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 161 | MALQ_ECOLI |  0.52 |  0.36 |  0.48 |   0.5 |  0.41 |   0.28 |   0.38 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 162 | MALZ_ECOLI |  0.36 |  0.41 |  0.48 |   0.5 |  0.48 |   0.47 |   0.54 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 163 | MASY_ECOLI |  0.18 |  0.3  |  0.48 |   0.5 |  0.46 |   0.24 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 164 | MCP1_ECOLI |  0.86 |  0.39 |  0.48 |   0.5 |  0.59 |   0.89 |   0.9  | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 165 | MCP2_ECOLI |  0.81 |  0.53 |  0.48 |   0.5 |  0.57 |   0.87 |   0.88 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 166 | MCP3_ECOLI |  0.6  |  0.5  |  1    |   0.5 |  0.54 |   0.77 |   0.8  | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 167 | MCP4_ECOLI |  0.87 |  0.49 |  0.48 |   0.5 |  0.61 |   0.76 |   0.79 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 168 | MELB_ECOLI |  0.47 |  0.46 |  0.48 |   0.5 |  0.62 |   0.74 |   0.77 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 169 | MEPA_ECOLI |  0.75 |  0.84 |  0.48 |   0.5 |  0.35 |   0.52 |   0.33 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 170 | METB_ECOLI |  0.47 |  0.29 |  0.48 |   0.5 |  0.51 |   0.33 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 171 | METC_ECOLI |  0.24 |  0.43 |  0.48 |   0.5 |  0.54 |   0.52 |   0.59 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 172 | METK_ECOLI |  0.25 |  0.37 |  0.48 |   0.5 |  0.41 |   0.33 |   0.42 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 173 | METR_ECOLI |  0.52 |  0.57 |  0.48 |   0.5 |  0.42 |   0.47 |   0.54 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 174 | METX_ECOLI |  0.25 |  0.37 |  0.48 |   0.5 |  0.43 |   0.26 |   0.36 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 175 | MODA_ECOLI |  0.63 |  0.65 |  0.48 |   0.5 |  0.39 |   0.44 |   0.35 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 176 | MOTA_ECOLI |  0.76 |  0.41 |  0.48 |   0.5 |  0.5  |   0.59 |   0.62 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 177 | MOTB_ECOLI |  0.3  |  0.51 |  0.48 |   0.5 |  0.42 |   0.61 |   0.34 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 178 | MSBB_ECOLI |  0.16 |  0.51 |  0.48 |   0.5 |  0.33 |   0.39 |   0.48 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 179 | MTR_ECOLI  |  0.74 |  0.7  |  0.48 |   0.5 |  0.66 |   0.65 |   0.69 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 180 | MULI_ECOLI |  0.77 |  0.57 |  1    |   0.5 |  0.37 |   0.54 |   0.01 | omL     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 181 | MURF_ECOLI |  0.35 |  0.48 |  0.48 |   0.5 |  0.56 |   0.4  |   0.48 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 182 | NADA_ECOLI |  0.26 |  0.26 |  0.48 |   0.5 |  0.34 |   0.25 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 183 | NANT_ECOLI |  0.2  |  0.46 |  0.48 |   0.5 |  0.57 |   0.78 |   0.81 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 184 | NFRA_ECOLI |  0.61 |  0.75 |  0.48 |   0.5 |  0.51 |   0.33 |   0.33 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 185 | NFRB_ECOLI |  0.63 |  0.49 |  0.48 |   0.5 |  0.54 |   0.76 |   0.79 | imS     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 186 | NFRC_ECOLI |  0.44 |  0.51 |  0.48 |   0.5 |  0.47 |   0.26 |   0.36 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 187 | NHAA_ECOLI |  0.89 |  0.55 |  0.48 |   0.5 |  0.51 |   0.72 |   0.76 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 188 | NHAB_ECOLI |  0.7  |  0.46 |  0.48 |   0.5 |  0.56 |   0.78 |   0.73 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 189 | NHAR_ECOLI |  0.37 |  0.5  |  0.48 |   0.5 |  0.42 |   0.36 |   0.45 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 190 | NIRD_ECOLI |  0.44 |  0.42 |  0.48 |   0.5 |  0.42 |   0.25 |   0.2  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 191 | NLPA_ECOLI |  0.75 |  0.55 |  1    |   1   |  0.4  |   0.47 |   0.3  | imL     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 192 | NLPB_ECOLI |  0.66 |  0.49 |  1    |   0.5 |  0.54 |   0.56 |   0.36 | omL     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 193 | NLPE_ECOLI |  0.71 |  0.46 |  1    |   0.5 |  0.52 |   0.59 |   0.3  | omL     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 194 | NMPC_ECOLI |  0.67 |  0.84 |  0.48 |   0.5 |  0.74 |   0.54 |   0.37 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 195 | NRFA_ECOLI |  0.69 |  0.67 |  0.48 |   0.5 |  0.3  |   0.39 |   0.24 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 196 | NRFF_ECOLI |  0.7  |  0.71 |  0.48 |   0.5 |  0.42 |   0.84 |   0.85 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 197 | NUPC_ECOLI |  0.7  |  0.53 |  0.48 |   0.5 |  0.7  |   0.86 |   0.87 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 198 | NUPG_ECOLI |  0.64 |  0.45 |  0.48 |   0.5 |  0.67 |   0.61 |   0.66 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 199 | OMPA_ECOLI |  0.74 |  0.9  |  0.48 |   0.5 |  0.57 |   0.53 |   0.29 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 200 | OMPC_ECOLI |  0.73 |  0.84 |  0.48 |   0.5 |  0.86 |   0.58 |   0.29 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 201 | OMPF_ECOLI |  0.75 |  0.76 |  0.48 |   0.5 |  0.83 |   0.57 |   0.3  | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 202 | OMPP_ECOLI |  0.69 |  0.59 |  0.48 |   0.5 |  0.77 |   0.39 |   0.21 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 203 | OMPR_ECOLI |  0.24 |  0.43 |  0.48 |   0.5 |  0.37 |   0.28 |   0.38 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 204 | OMPT_ECOLI |  0.63 |  0.49 |  0.48 |   0.5 |  0.79 |   0.45 |   0.28 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 205 | OMPX_ECOLI |  0.77 |  0.57 |  0.48 |   0.5 |  0.88 |   0.53 |   0.2  | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 206 | OPPA_ECOLI |  0.69 |  0.8  |  0.48 |   0.5 |  0.46 |   0.57 |   0.26 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 207 | OSMY_ECOLI |  0.64 |  0.66 |  0.48 |   0.5 |  0.41 |   0.39 |   0.2  | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 208 | OTC1_ECOLI |  0.42 |  0.3  |  0.48 |   0.5 |  0.48 |   0.26 |   0.36 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 209 | OTC2_ECOLI |  0.48 |  0.42 |  0.48 |   0.5 |  0.45 |   0.25 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 210 | PA1_ECOLI  |  0.68 |  0.63 |  0.48 |   0.5 |  0.73 |   0.4  |   0.3  | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 211 | PAL_ECOLI  |  0.67 |  0.55 |  1    |   0.5 |  0.66 |   0.58 |   0.16 | omL     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 212 | PEPE_ECOLI |  0.41 |  0.48 |  0.48 |   0.5 |  0.51 |   0.44 |   0.51 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 213 | PFLA_ECOLI |  0.44 |  0.28 |  0.48 |   0.5 |  0.43 |   0.27 |   0.37 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 214 | PFLB_ECOLI |  0.29 |  0.41 |  0.48 |   0.5 |  0.48 |   0.38 |   0.46 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 215 | PGK_ECOLI  |  0.34 |  0.28 |  0.48 |   0.5 |  0.41 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 216 | PHEP_ECOLI |  0.12 |  0.43 |  0.48 |   0.5 |  0.63 |   0.7  |   0.74 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 217 | PHOB_ECOLI |  0.41 |  0.43 |  0.48 |   0.5 |  0.45 |   0.31 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 218 | PHOE_ECOLI |  0.74 |  0.78 |  0.48 |   0.5 |  0.75 |   0.54 |   0.15 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 219 | PHOH_ECOLI |  0.29 |  0.47 |  0.48 |   0.5 |  0.41 |   0.23 |   0.34 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 220 | PHOR_ECOLI |  0.61 |  0.52 |  0.48 |   0.5 |  0.54 |   0.67 |   0.52 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 221 | PMBA_ECOLI |  0.34 |  0.55 |  0.48 |   0.5 |  0.58 |   0.31 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 222 | PNP_ECOLI  |  0.36 |  0.56 |  0.48 |   0.5 |  0.43 |   0.45 |   0.53 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 223 | PNTA_ECOLI |  0.33 |  0.37 |  0.48 |   0.5 |  0.46 |   0.65 |   0.69 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 224 | PNTB_ECOLI |  0.81 |  0.52 |  0.48 |   0.5 |  0.57 |   0.78 |   0.8  | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 225 | POTD_ECOLI |  0.63 |  0.8  |  0.48 |   0.5 |  0.46 |   0.31 |   0.29 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 226 | POTE_ECOLI |  0.63 |  0.65 |  0.48 |   0.5 |  0.66 |   0.67 |   0.71 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 227 | POTF_ECOLI |  0.66 |  0.71 |  0.48 |   0.5 |  0.41 |   0.5  |   0.35 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 228 | PPA_ECOLI  |  0.69 |  0.59 |  0.48 |   0.5 |  0.46 |   0.44 |   0.52 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 229 | PPB_ECOLI  |  0.68 |  0.67 |  0.48 |   0.5 |  0.49 |   0.4  |   0.34 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 230 | PROB_ECOLI |  0.4  |  0.46 |  0.48 |   0.5 |  0.52 |   0.49 |   0.56 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 231 | PROP_ECOLI |  0.41 |  0.51 |  0.48 |   0.5 |  0.53 |   0.75 |   0.78 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 232 | PROX_ECOLI |  0.64 |  0.78 |  0.48 |   0.5 |  0.5  |   0.36 |   0.38 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 233 | PSTA_ECOLI |  0.34 |  0.67 |  0.48 |   0.5 |  0.52 |   0.76 |   0.79 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 234 | PSTC_ECOLI |  0.58 |  0.34 |  0.48 |   0.5 |  0.56 |   0.87 |   0.81 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 235 | PSTS_ECOLI |  0.62 |  0.78 |  0.48 |   0.5 |  0.47 |   0.49 |   0.54 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 236 | PT1_ECOLI  |  0.52 |  0.44 |  0.48 |   0.5 |  0.37 |   0.36 |   0.42 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 237 | PT1A_ECOLI |  0.5  |  0.49 |  0.48 |   0.5 |  0.49 |   0.46 |   0.53 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 238 | PTAA_ECOLI |  0.59 |  0.56 |  0.48 |   0.5 |  0.55 |   0.8  |   0.82 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 239 | PTBA_ECOLI |  0.51 |  0.4  |  0.48 |   0.5 |  0.57 |   0.62 |   0.67 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 240 | PTCA_ECOLI |  0.5  |  0.51 |  0.48 |   0.5 |  0.27 |   0.23 |   0.34 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 241 | PTCB_ECOLI |  0.53 |  0.42 |  0.48 |   0.5 |  0.16 |   0.29 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 242 | PTCC_ECOLI |  0.5  |  0.57 |  0.48 |   0.5 |  0.71 |   0.61 |   0.66 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 243 | PTDA_ECOLI |  0.6  |  0.46 |  0.48 |   0.5 |  0.45 |   0.81 |   0.83 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 244 | PTFA_ECOLI |  0.34 |  0.46 |  0.48 |   0.5 |  0.52 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 245 | PTFB_ECOLI |  0.37 |  0.47 |  0.48 |   0.5 |  0.39 |   0.76 |   0.79 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 246 | PTGA_ECOLI |  0.4  |  0.42 |  0.48 |   0.5 |  0.37 |   0.27 |   0.27 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 247 | PTGB_ECOLI |  0.58 |  0.55 |  0.48 |   0.5 |  0.57 |   0.7  |   0.74 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 248 | PTHA_ECOLI |  0.41 |  0.43 |  0.48 |   0.5 |  0.5  |   0.24 |   0.25 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 249 | PTHB_ECOLI |  0.36 |  0.47 |  0.48 |   0.5 |  0.51 |   0.69 |   0.72 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 250 | PTHP_ECOLI |  0.3  |  0.45 |  0.48 |   0.5 |  0.36 |   0.21 |   0.32 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 251 | PTKA_ECOLI |  0.31 |  0.47 |  0.48 |   0.5 |  0.29 |   0.28 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 252 | PTKB_ECOLI |  0.64 |  0.76 |  0.48 |   0.5 |  0.45 |   0.35 |   0.38 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 253 | PTKC_ECOLI |  0.73 |  0.26 |  0.48 |   0.5 |  0.57 |   0.75 |   0.78 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 254 | PTMA_ECOLI |  0.39 |  0.41 |  0.48 |   0.5 |  0.52 |   0.72 |   0.75 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 255 | PTNA_ECOLI |  0.35 |  0.37 |  0.48 |   0.5 |  0.3  |   0.34 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 256 | PTOA_ECOLI |  0.35 |  0.51 |  0.48 |   0.5 |  0.61 |   0.71 |   0.74 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 257 | PTR_ECOLI  |  0.76 |  0.73 |  0.48 |   0.5 |  0.44 |   0.39 |   0.39 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 258 | PTTB_ECOLI |  0.31 |  0.44 |  0.48 |   0.5 |  0.5  |   0.79 |   0.82 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 259 | PTWB_ECOLI |  0.57 |  0.54 |  0.48 |   0.5 |  0.37 |   0.28 |   0.33 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 260 | PTWX_ECOLI |  0.65 |  0.55 |  0.48 |   0.5 |  0.34 |   0.37 |   0.28 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 261 | RBSB_ECOLI |  0.64 |  0.81 |  0.48 |   0.5 |  0.37 |   0.39 |   0.44 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 262 | RHAR_ECOLI |  0.51 |  0.46 |  0.48 |   0.5 |  0.58 |   0.31 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 263 | RHAS_ECOLI |  0.38 |  0.4  |  0.48 |   0.5 |  0.63 |   0.25 |   0.35 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 264 | RHAT_ECOLI |  0.49 |  0.61 |  1    |   0.5 |  0.56 |   0.71 |   0.74 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 265 | RIMI_ECOLI |  0.24 |  0.57 |  0.48 |   0.5 |  0.63 |   0.34 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 266 | RIMJ_ECOLI |  0.38 |  0.26 |  0.48 |   0.5 |  0.54 |   0.16 |   0.28 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 267 | RIML_ECOLI |  0.33 |  0.47 |  0.48 |   0.5 |  0.53 |   0.18 |   0.29 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 268 | RNB_ECOLI  |  0.24 |  0.34 |  0.48 |   0.5 |  0.38 |   0.3  |   0.4  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 269 | RNC_ECOLI  |  0.26 |  0.5  |  0.48 |   0.5 |  0.44 |   0.32 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 270 | RND_ECOLI  |  0.44 |  0.49 |  0.48 |   0.5 |  0.39 |   0.38 |   0.4  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 271 | RNE_ECOLI  |  0.43 |  0.32 |  0.48 |   0.5 |  0.33 |   0.45 |   0.52 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 272 | RODA_ECOLI |  0.61 |  0.66 |  0.48 |   0.5 |  0.46 |   0.87 |   0.88 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 273 | SECD_ECOLI |  0.88 |  0.42 |  0.48 |   0.5 |  0.52 |   0.73 |   0.75 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 274 | SECE_ECOLI |  0.48 |  0.49 |  0.48 |   0.5 |  0.52 |   0.77 |   0.71 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 275 | SECF_ECOLI |  0.11 |  0.5  |  0.48 |   0.5 |  0.58 |   0.72 |   0.68 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 276 | SECG_ECOLI |  0.84 |  0.54 |  0.48 |   0.5 |  0.75 |   0.92 |   0.7  | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 277 | SECY_ECOLI |  0.31 |  0.36 |  0.48 |   0.5 |  0.58 |   0.94 |   0.94 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 278 | SERC_ECOLI |  0.49 |  0.43 |  0.48 |   0.5 |  0.49 |   0.3  |   0.4  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 279 | SLP_ECOLI  |  0.68 |  0.49 |  1    |   0.5 |  0.62 |   0.55 |   0.28 | omL     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 280 | SLYD_ECOLI |  0.47 |  0.28 |  0.48 |   0.5 |  0.56 |   0.2  |   0.25 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 281 | SOXS_ECOLI |  0.32 |  0.33 |  0.48 |   0.5 |  0.6  |   0.06 |   0.2  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 282 | SPEA_ECOLI |  0.29 |  0.39 |  0.48 |   0.5 |  0.52 |   0.4  |   0.48 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 283 | SUBI_ECOLI |  0.62 |  0.83 |  0.48 |   0.5 |  0.46 |   0.36 |   0.4  | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 284 | SYA_ECOLI  |  0.34 |  0.35 |  0.48 |   0.5 |  0.51 |   0.49 |   0.56 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 285 | SYC_ECOLI  |  0.35 |  0.34 |  0.48 |   0.5 |  0.46 |   0.3  |   0.27 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 286 | SYD_ECOLI  |  0.38 |  0.3  |  0.48 |   0.5 |  0.43 |   0.29 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 287 | SYE_ECOLI  |  0.38 |  0.44 |  0.48 |   0.5 |  0.43 |   0.2  |   0.31 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 288 | SYFA_ECOLI |  0.41 |  0.51 |  0.48 |   0.5 |  0.58 |   0.2  |   0.31 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 289 | SYFB_ECOLI |  0.34 |  0.42 |  0.48 |   0.5 |  0.41 |   0.34 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 290 | SYGA_ECOLI |  0.51 |  0.49 |  0.48 |   0.5 |  0.53 |   0.14 |   0.26 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 291 | SYGB_ECOLI |  0.25 |  0.51 |  0.48 |   0.5 |  0.37 |   0.42 |   0.5  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 292 | SYH_ECOLI  |  0.29 |  0.28 |  0.48 |   0.5 |  0.5  |   0.42 |   0.5  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 293 | SYI_ECOLI  |  0.25 |  0.26 |  0.48 |   0.5 |  0.39 |   0.32 |   0.42 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 294 | SYK1_ECOLI |  0.24 |  0.41 |  0.48 |   0.5 |  0.49 |   0.23 |   0.34 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 295 | SYK2_ECOLI |  0.17 |  0.39 |  0.48 |   0.5 |  0.53 |   0.3  |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 296 | SYL_ECOLI  |  0.04 |  0.31 |  0.48 |   0.5 |  0.41 |   0.29 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 297 | SYM_ECOLI  |  0.61 |  0.36 |  0.48 |   0.5 |  0.49 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 298 | SYP_ECOLI  |  0.34 |  0.51 |  0.48 |   0.5 |  0.44 |   0.37 |   0.46 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 299 | SYQ_ECOLI  |  0.28 |  0.33 |  0.48 |   0.5 |  0.45 |   0.22 |   0.33 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 300 | SYR_ECOLI  |  0.4  |  0.46 |  0.48 |   0.5 |  0.42 |   0.35 |   0.44 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 301 | SYS_ECOLI  |  0.23 |  0.34 |  0.48 |   0.5 |  0.43 |   0.26 |   0.37 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 302 | SYT_ECOLI  |  0.37 |  0.44 |  0.48 |   0.5 |  0.42 |   0.39 |   0.47 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 303 | SYV_ECOLI  |  0    |  0.38 |  0.48 |   0.5 |  0.42 |   0.48 |   0.55 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 304 | SYW_ECOLI  |  0.39 |  0.31 |  0.48 |   0.5 |  0.38 |   0.34 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 305 | SYY_ECOLI  |  0.3  |  0.44 |  0.48 |   0.5 |  0.49 |   0.22 |   0.33 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 306 | TBPA_ECOLI |  0.56 |  0.54 |  0.48 |   0.5 |  0.43 |   0.37 |   0.3  | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 307 | TEHA_ECOLI |  0.63 |  0.51 |  0.48 |   0.5 |  0.64 |   0.72 |   0.76 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 308 | TESA_ECOLI |  0.69 |  0.66 |  0.48 |   0.5 |  0.41 |   0.5  |   0.25 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 309 | THGA_ECOLI |  0.27 |  0.3  |  0.48 |   0.5 |  0.71 |   0.28 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 310 | THIK_ECOLI |  0.17 |  0.52 |  0.48 |   0.5 |  0.49 |   0.37 |   0.46 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 311 | TNAB_ECOLI |  0.68 |  0.51 |  0.48 |   0.5 |  0.71 |   0.75 |   0.78 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 312 | TOLA_ECOLI |  0.61 |  0.47 |  0.48 |   0.5 |  0    |   0.8  |   0.32 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 313 | TOLB_ECOLI |  0.69 |  0.65 |  0.48 |   0.5 |  0.63 |   0.48 |   0.41 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 314 | TOLC_ECOLI |  0.71 |  0.71 |  0.48 |   0.5 |  0.68 |   0.43 |   0.36 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 315 | TOLQ_ECOLI |  0.63 |  0.75 |  0.48 |   0.5 |  0.64 |   0.73 |   0.66 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 316 | TONB_ECOLI |  0.57 |  0.38 |  0.48 |   0.5 |  0.06 |   0.49 |   0.33 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 317 | TORA_ECOLI |  0.43 |  0.59 |  0.48 |   0.5 |  0.52 |   0.49 |   0.56 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 318 | TREA_ECOLI |  0.74 |  0.56 |  0.48 |   0.5 |  0.47 |   0.68 |   0.3  | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 319 | TSX_ECOLI  |  0.68 |  0.76 |  0.48 |   0.5 |  0.84 |   0.45 |   0.27 | om      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 320 | TYRB_ECOLI |  0.36 |  0.42 |  0.48 |   0.5 |  0.53 |   0.32 |   0.41 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 321 | TYRP_ECOLI |  0.86 |  0.55 |  0.48 |   0.5 |  0.63 |   0.81 |   0.83 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 322 | UBIC_ECOLI |  0.3  |  0.37 |  0.48 |   0.5 |  0.43 |   0.18 |   0.3  | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 323 | UGPB_ECOLI |  0.71 |  0.57 |  0.48 |   0.5 |  0.48 |   0.35 |   0.32 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 324 | UGPQ_ECOLI |  0.26 |  0.4  |  0.48 |   0.5 |  0.36 |   0.26 |   0.37 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 325 | UHPB_ECOLI |  0.79 |  0.54 |  0.48 |   0.5 |  0.5  |   0.66 |   0.68 | imU     |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 326 | USHA_ECOLI |  0.61 |  0.6  |  0.48 |   0.5 |  0.44 |   0.39 |   0.38 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 327 | USPA_ECOLI |  0.4  |  0.41 |  0.48 |   0.5 |  0.55 |   0.22 |   0.33 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 328 | UVRB_ECOLI |  0.22 |  0.34 |  0.48 |   0.5 |  0.42 |   0.29 |   0.39 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 329 | UVRC_ECOLI |  0.44 |  0.35 |  0.48 |   0.5 |  0.44 |   0.52 |   0.59 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 330 | XGPT_ECOLI |  0.27 |  0.42 |  0.48 |   0.5 |  0.37 |   0.38 |   0.43 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 331 | XYLA_ECOLI |  0.16 |  0.43 |  0.48 |   0.5 |  0.54 |   0.27 |   0.37 | cp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 332 | XYLE_ECOLI |  0.69 |  0.39 |  0.48 |   0.5 |  0.57 |   0.76 |   0.79 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 333 | XYLF_ECOLI |  0.59 |  0.61 |  0.48 |   0.5 |  0.42 |   0.42 |   0.37 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 334 | YCEE_ECOLI |  0.52 |  0.54 |  0.48 |   0.5 |  0.62 |   0.76 |   0.79 | im      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+| 335 | YTFQ_ECOLI |  0.74 |  0.74 |  0.48 |   0.5 |  0.31 |   0.53 |   0.52 | pp      |
++-----+------------+-------+-------+-------+-------+-------+--------+--------+---------+
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualisasi-data">
+<h2>Visualisasi data<a class="headerlink" href="#visualisasi-data" title="Link to this heading">#</a></h2>
+<p>Data ditampilkan menggunakan PCA yang mana data sudaha ditranspormasikan menjadi 2 dimensi</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="c1"># Pisahkan fitur dan target</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Sequence&#39;</span><span class="p">,</span><span class="s1">&#39;class&#39;</span><span class="p">])</span>
+
+<span class="c1"># Lakukan PCA ke 2 dimensi</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Buat DataFrame hasil PCA</span>
+<span class="n">df_pca</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">,</span> <span class="s2">&quot;PC2&quot;</span><span class="p">])</span>
+<span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>  <span class="c1"># tambahkan class untuk label warna</span>
+
+<span class="c1"># Scatter plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">df_pca</span><span class="p">[</span><span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">c</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC2&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PCA Scatter Plot (Ecoli Data)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5ab57ca2d8f3085e5d03780be5ead29b38a2a235b7ee47ccaf4847bc1d037285.png" src="_images/5ab57ca2d8f3085e5d03780be5ead29b38a2a235b7ee47ccaf4847bc1d037285.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">ADASYN</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="c1"># Data preparation</span>
+<span class="n">nt</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribusi awal:&quot;</span><span class="p">,</span> <span class="n">Counter</span><span class="p">(</span><span class="n">ns</span><span class="p">))</span>
+
+<span class="n">class_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Class counts:&quot;</span><span class="p">,</span> <span class="n">class_counts</span><span class="p">)</span>
+
+<span class="c1"># Urutkan kelas dari yang paling sedikit ke paling banyak</span>
+<span class="n">sorted_classes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">class_counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sorted classes by count:&quot;</span><span class="p">,</span> <span class="n">sorted_classes</span><span class="p">)</span>
+
+<span class="c1"># Coba ADASYN bertahap untuk kelas minoritas</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_classes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>  <span class="c1"># Skip kelas mayoritas</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Hanya untuk kelas dengan cukup samples</span>
+        <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Pastikan n_neighbors aman</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Processing class &#39;</span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">&#39; (count: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">) with n_neighbors=</span><span class="si">{</span><span class="n">n_neighbors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">adasyn</span> <span class="o">=</span> <span class="n">ADASYN</span><span class="p">(</span>
+                <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span>
+                <span class="n">sampling_strategy</span><span class="o">=</span><span class="p">{</span><span class="bp">cls</span><span class="p">:</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">10</span><span class="p">}</span>  <span class="c1"># Naikkan 10 sampel</span>
+            <span class="p">)</span>
+            <span class="n">nt</span><span class="p">,</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">adasyn</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">nt</span><span class="p">,</span> <span class="n">ns</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Success for class &#39;</span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   New distribution: </span><span class="si">{</span><span class="n">Counter</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Failed for class &#39;</span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Final distribution: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">/tmp/ipython-input-3269223312.py</span> in <span class="ni">&lt;cell line: 0&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Data preparation</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">nt</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> 
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribusi awal:&quot;</span><span class="p">,</span> <span class="n">Counter</span><span class="p">(</span><span class="n">ns</span><span class="p">))</span>
+
+<span class="ne">NameError</span>: name &#39;y&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualisasi-data-yang-diimbangkan-dengan-pca">
+<h2>Visualisasi Data yang Diimbangkan dengan PCA<a class="headerlink" href="#visualisasi-data-yang-diimbangkan-dengan-pca" title="Link to this heading">#</a></h2>
+<p>Saya akan menerapkan PCA pada data yang sudah diseimbangkan, membuat DataFrame baru yang berisi hasil PCA dan label kelas yang sesuai, mengidentifikasi sampel asli dan yang dihasilkan, dan kemudian membuat scatter plot untuk memvisualisasikan data yang sudah diseimbangkan, menandai titik data yang baru dibuat.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lakukan PCA ke 2 dimensi</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span>
+
+<span class="c1"># Buat DataFrame hasil PCA untuk plotting</span>
+<span class="n">df_pca</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">,</span> <span class="s2">&quot;PC2&quot;</span><span class="p">])</span>
+<span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="k">else</span> <span class="n">ns</span>  <span class="c1"># pastikan ns bisa dipakai</span>
+
+<span class="c1"># Scatter plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">df_pca</span><span class="p">[</span><span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">c</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC2&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PCA Scatter Plot setelah ADASYN&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/253456afaca70d52b40a8f8de2fc15213eb338def73f9492d88930c015256beb.png" src="_images/253456afaca70d52b40a8f8de2fc15213eb338def73f9492d88930c015256beb.png" />
+</div>
+</div>
+</section>
+<section id="ploting-data-dari-data-yang-diimbangkan-menggunakan-pca-tandai-data-data-hasil-generatenya">
+<h2>Ploting data dari data yang diimbangkan menggunakan PCA, tandai data data hasil generatenya<a class="headerlink" href="#ploting-data-dari-data-yang-diimbangkan-menggunakan-pca-tandai-data-data-hasil-generatenya" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># 1. Simpan jumlah data awal</span>
+<span class="n">n_original</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># 2. Lakukan PCA ke 2 dimensi</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span>
+
+<span class="c1"># 3. Buat DataFrame hasil PCA untuk plotting</span>
+<span class="n">df_pca</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">,</span> <span class="s2">&quot;PC2&quot;</span><span class="p">])</span>
+<span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="k">else</span> <span class="n">ns</span>
+
+<span class="c1"># Tandai data asli vs synthetic</span>
+<span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;original&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_original</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;synthetic&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_pca</span><span class="p">)</span> <span class="o">-</span> <span class="n">n_original</span><span class="p">)</span>
+
+<span class="c1"># 4. Scatter plot dengan penanda synthetic</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Plot data original</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">df_pca</span><span class="p">[(</span><span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;original&quot;</span><span class="p">)]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC2&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2"> (original)&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot data synthetic (pakai marker berbeda)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">df_pca</span><span class="p">[(</span><span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_pca</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;synthetic&quot;</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">subset</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;PC2&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2"> (synthetic)&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PCA Scatter Plot setelah ADASYN</span><span class="se">\n</span><span class="s2">(Original vs Synthetic)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/47a10bca488d808c1d4e8d46a9bd5bc48230514b92b999586a282acf3c89dd7a.png" src="_images/47a10bca488d808c1d4e8d46a9bd5bc48230514b92b999586a282acf3c89dd7a.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Data%20Preprocessing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Preprocessing Data</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tugas">Tugas :</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-ecoli-yang-disimpan-di-mysql">Ambil data Ecoli yang disimpan di MySQL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-data">Visualisasi data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-data-yang-diimbangkan-dengan-pca">Visualisasi Data yang Diimbangkan dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ploting-data-dari-data-yang-diimbangkan-menggunakan-pca-tandai-data-data-hasil-generatenya">Ploting data dari data yang diimbangkan menggunakan PCA, tandai data data hasil generatenya</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
