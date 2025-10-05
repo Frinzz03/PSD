@@ -389,6 +389,14 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#melakukan-penyeimbangan-menggunakan-smote"><strong>Melakukan Penyeimbangan Menggunakan Smote</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penyeimbangan-data-menggunakan-adasyn"><strong>Penyeimbangan data menggunakan ADASYN</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ploting-data-dari-data-yang-diimbangkan-menggunakan-pca-tandai-data-data-hasil-generatenya">Ploting data dari data yang diimbangkan menggunakan PCA, tandai data data hasil generatenya</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasikasi-menggunakan-naive-bayes-random-forest-dan-bagging-classifier"><strong>Klasikasi menggunakan Naive Bayes, Random Forest dan Bagging Classifier</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-pada-data-asli">Klasifikasi pada data asli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-pada-data-smote">Klasifikasi pada data smote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-pada-data-adasyn">Klasifikasi pada data adasyn</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkas-hasil">Ringkas hasil</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan:</a></li>
 </ul>
             </nav>
         </div>
@@ -427,16 +435,7 @@ PCA mentransformasi data menjadi dimensi rendah (2)</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pymysql
-  Downloading pymysql-1.1.2-py3-none-any.whl.metadata (4.3 kB)
-Downloading pymysql-1.1.2-py3-none-any.whl (45 kB)
-?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.3 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.3/45.3 kB</span> <span class=" -Color -Color-Red">1.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25h
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pymysql
-Successfully installed pymysql-1.1.2
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pymysql in /usr/local/lib/python3.12/dist-packages (1.1.2)
 </pre></div>
 </div>
 </div>
@@ -451,7 +450,7 @@ Successfully installed pymysql-1.1.2
 <span class="n">mysql_config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql23-112-irismysql23-112.h.aivencloud.com&quot;</span><span class="p">,</span>
     <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;avnadmin&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;AVNS_cTNd4CUt1kk0Z7MPIC1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;AVNS_w3l0yLp5NgxawHvzDjq&quot;</span><span class="p">,</span>
     <span class="s2">&quot;database&quot;</span><span class="p">:</span> <span class="s2">&quot;defaultdb&quot;</span><span class="p">,</span>
     <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">15786</span>
 <span class="p">}</span>
@@ -955,6 +954,537 @@ Counter({&#39;im&#39;: 156, &#39;pp&#39;: 150, &#39;cp&#39;: 143, &#39;imU&#39;:
 </div>
 </div>
 </section>
+<section id="klasikasi-menggunakan-naive-bayes-random-forest-dan-bagging-classifier">
+<h2><strong>Klasikasi menggunakan Naive Bayes, Random Forest dan Bagging Classifier</strong><a class="headerlink" href="#klasikasi-menggunakan-naive-bayes-random-forest-dan-bagging-classifier" title="Link to this heading">#</a></h2>
+<p>Klasifikasi menggunakan Naive Bayes, Random Forest, dan Bagging Classifier pada data sebelum dan sesudah diseimbangkan dengan SMOTE dan ADASYN.</p>
+<p>Membuat fungsi Python yang menerima data fitur (X), data target (y), dan objek model klasifikasi. Fungsi ini akan membagi data menjadi set pelatihan dan pengujian, melatih model pada set pelatihan, membuat prediksi pada set pengujian, dan mengembalikan metrik evaluasi (misalnya, akurasi, presisi, recall, F1-score).</p>
+<section id="klasifikasi-pada-data-asli">
+<h3>Klasifikasi pada data asli<a class="headerlink" href="#klasifikasi-pada-data-asli" title="Link to this heading">#</a></h3>
+<p>Menggunakan fungsi <code class="docutils literal notranslate"><span class="pre">perform_classification</span></code> yang sudah dibuat untuk mengklasifikasikan data asli (sebelum penyeimbangan) menggunakan model Naive Bayes, Random Forest, dan Bagging Classifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">BaggingClassifier</span>
+
+<span class="c1"># Inisialisasi model</span>
+<span class="n">nb_model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">rf_model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging_model</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Klasifikasi data asli</span>
+<span class="n">results_nb_original</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">nb_model</span><span class="p">)</span>
+<span class="n">results_rf_original</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rf_model</span><span class="p">)</span>
+<span class="n">results_bagging_original</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bagging_model</span><span class="p">)</span>
+
+<span class="c1"># Cetak hasil</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hasil Klasifikasi Data Asli (Naive Bayes):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_nb_original</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Klasifikasi Data Asli (Random Forest):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_rf_original</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Klasifikasi Data Asli (Bagging Classifier):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_bagging_original</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">/tmp/ipython-input-184705662.py</span> in <span class="ni">&lt;cell line: 0&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># Klasifikasi data asli</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">results_nb_original</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">nb_model</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">results_rf_original</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rf_model</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">results_bagging_original</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bagging_model</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;perform_classification&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="klasifikasi-pada-data-smote">
+<h3>Klasifikasi pada data smote<a class="headerlink" href="#klasifikasi-pada-data-smote" title="Link to this heading">#</a></h3>
+<p>Gunakan fungsi <code class="docutils literal notranslate"><span class="pre">perform_classification</span></code> untuk mengklasifikasikan data yang telah diseimbangkan menggunakan SMOTE dengan model Naive Bayes, Random Forest, dan Bagging Classifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">BaggingClassifier</span>
+
+<span class="c1"># Inisialisasi model</span>
+<span class="n">nb_model_smote</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">rf_model_smote</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging_model_smote</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Klasifikasi data setelah SMOTE</span>
+<span class="n">results_nb_smote</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">nb_model_smote</span><span class="p">)</span>
+<span class="n">results_rf_smote</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">rf_model_smote</span><span class="p">)</span>
+<span class="n">results_bagging_smote</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">bagging_model_smote</span><span class="p">)</span>
+
+<span class="c1"># Cetak hasil</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hasil Klasifikasi Data Setelah SMOTE (Naive Bayes):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_nb_smote</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Klasifikasi Data Setelah SMOTE (Random Forest):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_rf_smote</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Klasifikasi Data Setelah SMOTE (Bagging Classifier):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_bagging_smote</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil Klasifikasi Data Setelah SMOTE (Naive Bayes):
+{&#39;accuracy&#39;: 0.7478510028653295, &#39;precision&#39;: 0.794077307930682, &#39;recall&#39;: 0.7478510028653295, &#39;f1_score&#39;: 0.7161332397734559}
+
+Hasil Klasifikasi Data Setelah SMOTE (Random Forest):
+{&#39;accuracy&#39;: 0.9455587392550143, &#39;precision&#39;: 0.9470799064780556, &#39;recall&#39;: 0.9455587392550143, &#39;f1_score&#39;: 0.9456819750660367}
+
+Hasil Klasifikasi Data Setelah SMOTE (Bagging Classifier):
+{&#39;accuracy&#39;: 0.9484240687679083, &#39;precision&#39;: 0.9490789796182008, &#39;recall&#39;: 0.9484240687679083, &#39;f1_score&#39;: 0.9483719967968244}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="klasifikasi-pada-data-adasyn">
+<h3>Klasifikasi pada data adasyn<a class="headerlink" href="#klasifikasi-pada-data-adasyn" title="Link to this heading">#</a></h3>
+<p>Gunakan fungsi <code class="docutils literal notranslate"><span class="pre">perform_classification</span></code> untuk mengklasifikasikan data yang telah diseimbangkan menggunakan ADASYN dengan model Naive Bayes, Random Forest, dan Bagging Classifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">BaggingClassifier</span>
+
+<span class="c1"># Inisialisasi model</span>
+<span class="n">nb_model_adasyn</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">rf_model_adasyn</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging_model_adasyn</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Klasifikasi data setelah ADASYN</span>
+<span class="n">results_nb_adasyn</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">nb_model_adasyn</span><span class="p">)</span>
+<span class="n">results_rf_adasyn</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">rf_model_adasyn</span><span class="p">)</span>
+<span class="n">results_bagging_adasyn</span> <span class="o">=</span> <span class="n">perform_classification</span><span class="p">(</span><span class="n">X_resampled</span><span class="p">,</span> <span class="n">y_resampled</span><span class="p">,</span> <span class="n">bagging_model_adasyn</span><span class="p">)</span>
+
+<span class="c1"># Cetak hasil</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hasil Klasifikasi Data Setelah ADASYN (Naive Bayes):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_nb_adasyn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Klasifikasi Data Setelah ADASYN (Random Forest):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_rf_adasyn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Klasifikasi Data Setelah ADASYN (Bagging Classifier):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_bagging_adasyn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil Klasifikasi Data Setelah ADASYN (Naive Bayes):
+{&#39;accuracy&#39;: 0.7478510028653295, &#39;precision&#39;: 0.794077307930682, &#39;recall&#39;: 0.7478510028653295, &#39;f1_score&#39;: 0.7161332397734559}
+
+Hasil Klasifikasi Data Setelah ADASYN (Random Forest):
+{&#39;accuracy&#39;: 0.9455587392550143, &#39;precision&#39;: 0.9470799064780556, &#39;recall&#39;: 0.9455587392550143, &#39;f1_score&#39;: 0.9456819750660367}
+
+Hasil Klasifikasi Data Setelah ADASYN (Bagging Classifier):
+{&#39;accuracy&#39;: 0.9484240687679083, &#39;precision&#39;: 0.9490789796182008, &#39;recall&#39;: 0.9484240687679083, &#39;f1_score&#39;: 0.9483719967968244}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ringkas-hasil">
+<h3>Ringkas hasil<a class="headerlink" href="#ringkas-hasil" title="Link to this heading">#</a></h3>
+<p>Meringkas ketiga klasifikasi di atas menjadi 1 tabel</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a dictionary to hold the results</span>
+<span class="n">results_summary</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Scenario&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="s2">&quot;SMOTE&quot;</span><span class="p">,</span> <span class="s2">&quot;ADASYN&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Naive Bayes Accuracy&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_nb_original</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span> <span class="n">results_nb_smote</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span> <span class="n">results_nb_adasyn</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Naive Bayes Precision&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_nb_original</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span> <span class="n">results_nb_smote</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span> <span class="n">results_nb_adasyn</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Naive Bayes Recall&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_nb_original</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span> <span class="n">results_nb_smote</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span> <span class="n">results_nb_adasyn</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Naive Bayes F1-score&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_nb_original</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">],</span> <span class="n">results_nb_smote</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">],</span> <span class="n">results_nb_adasyn</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Random Forest Accuracy&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_rf_original</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span> <span class="n">results_rf_smote</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span> <span class="n">results_rf_adasyn</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Random Forest Precision&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_rf_original</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span> <span class="n">results_rf_smote</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span> <span class="n">results_rf_adasyn</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Random Forest Recall&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_rf_original</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span> <span class="n">results_rf_smote</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span> <span class="n">results_rf_adasyn</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Random Forest F1-score&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_rf_original</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">],</span> <span class="n">results_rf_smote</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">],</span> <span class="n">results_rf_adasyn</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Bagging Classifier Accuracy&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_bagging_original</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span> <span class="n">results_bagging_smote</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span> <span class="n">results_bagging_adasyn</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Bagging Classifier Precision&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_bagging_original</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span> <span class="n">results_bagging_smote</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span> <span class="n">results_bagging_adasyn</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Bagging Classifier Recall&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_bagging_original</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span> <span class="n">results_bagging_smote</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span> <span class="n">results_bagging_adasyn</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">]],</span>
+    <span class="s2">&quot;Bagging Classifier F1-score&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">results_bagging_original</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">],</span> <span class="n">results_bagging_smote</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">],</span> <span class="n">results_bagging_adasyn</span><span class="p">[</span><span class="s2">&quot;f1_score&quot;</span><span class="p">]],</span>
+<span class="p">}</span>
+
+<span class="c1"># Create a pandas DataFrame from the dictionary</span>
+<span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_summary</span><span class="p">)</span>
+
+<span class="c1"># Display the DataFrame in a readable format</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-659d5eb8-9eec-432c-9658-5ccfecb0e9ca" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Scenario</th>
+      <th>Naive Bayes Accuracy</th>
+      <th>Naive Bayes Precision</th>
+      <th>Naive Bayes Recall</th>
+      <th>Naive Bayes F1-score</th>
+      <th>Random Forest Accuracy</th>
+      <th>Random Forest Precision</th>
+      <th>Random Forest Recall</th>
+      <th>Random Forest F1-score</th>
+      <th>Bagging Classifier Accuracy</th>
+      <th>Bagging Classifier Precision</th>
+      <th>Bagging Classifier Recall</th>
+      <th>Bagging Classifier F1-score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Original</td>
+      <td>0.831683</td>
+      <td>0.814883</td>
+      <td>0.831683</td>
+      <td>0.816821</td>
+      <td>0.861386</td>
+      <td>0.852485</td>
+      <td>0.861386</td>
+      <td>0.849776</td>
+      <td>0.841584</td>
+      <td>0.842502</td>
+      <td>0.841584</td>
+      <td>0.829890</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SMOTE</td>
+      <td>0.747851</td>
+      <td>0.794077</td>
+      <td>0.747851</td>
+      <td>0.716133</td>
+      <td>0.945559</td>
+      <td>0.947080</td>
+      <td>0.945559</td>
+      <td>0.945682</td>
+      <td>0.948424</td>
+      <td>0.949079</td>
+      <td>0.948424</td>
+      <td>0.948372</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ADASYN</td>
+      <td>0.747851</td>
+      <td>0.794077</td>
+      <td>0.747851</td>
+      <td>0.716133</td>
+      <td>0.945559</td>
+      <td>0.947080</td>
+      <td>0.945559</td>
+      <td>0.945682</td>
+      <td>0.948424</td>
+      <td>0.949079</td>
+      <td>0.948424</td>
+      <td>0.948372</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-659d5eb8-9eec-432c-9658-5ccfecb0e9ca')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-659d5eb8-9eec-432c-9658-5ccfecb0e9ca button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-659d5eb8-9eec-432c-9658-5ccfecb0e9ca');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+    <div id="df-345da198-90f4-48e2-91ea-9edf6054cb33">
+      <button class="colab-df-quickchart" onclick="quickchart('df-345da198-90f4-48e2-91ea-9edf6054cb33')"
+                title="Suggest charts"
+                style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+      <script>
+        async function quickchart(key) {
+          const quickchartButtonEl =
+            document.querySelector('#' + key + ' button');
+          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+          quickchartButtonEl.classList.add('colab-df-spinner');
+          try {
+            const charts = await google.colab.kernel.invokeFunction(
+                'suggestCharts', [key], {});
+          } catch (error) {
+            console.error('Error during call to suggestCharts:', error);
+          }
+          quickchartButtonEl.classList.remove('colab-df-spinner');
+          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+        }
+        (() => {
+          let quickchartButtonEl =
+            document.querySelector('#df-345da198-90f4-48e2-91ea-9edf6054cb33 button');
+          quickchartButtonEl.style.display =
+            google.colab.kernel.accessAllowed ? 'block' : 'none';
+        })();
+      </script>
+    </div>
+
+  <div id="id_edd1920e-a66e-47d8-a6b2-cbc12729f389">
+    <style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+    <button class="colab-df-generate" onclick="generateWithVariable('df_results')"
+            title="Generate code using this dataframe."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"/>
+  </svg>
+    </button>
+    <script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_edd1920e-a66e-47d8-a6b2-cbc12729f389 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('df_results');
+      }
+      })();
+    </script>
+  </div>
+
+    </div>
+  </div>
+</div></div>
+</div>
+</section>
+</section>
+<section id="kesimpulan">
+<h2>Kesimpulan:<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Klasifikasi dilakukan pada data asli, data yang diseimbangkan dengan SMOTE, dan data yang diseimbangkan dengan ADASYN menggunakan model Naive Bayes, Random Forest, dan Bagging Classifier.</p></li>
+<li><p>Pada data asli, Random Forest memiliki akurasi tertinggi (sekitar 0.861), diikuti oleh Bagging Classifier (sekitar 0.842), dan Naive Bayes (sekitar 0.832).</p></li>
+<li><p>Setelah penyeimbangan dengan SMOTE dan ADASYN, kinerja Random Forest dan Bagging Classifier meningkat secara signifikan di semua metrik dibandingkan dengan data asli.</p></li>
+<li><p>Pada data yang diseimbangkan, Random Forest dan Bagging Classifier mencapai akurasi di atas 0.94.</p></li>
+<li><p>Kinerja Naive Bayes cenderung menurun pada data yang diseimbangkan (akurasi sekitar 0.748) dibandingkan dengan data asli.</p></li>
+<li><p>Hasil klasifikasi pada data SMOTE dan ADASYN menunjukkan metrik kinerja yang hampir identik untuk semua model dalam eksekusi ini.</p></li>
+<li><p>Penyeimbangan data menggunakan SMOTE atau ADASYN sangat efektif dalam meningkatkan kinerja model ensemble seperti Random Forest dan Bagging Classifier pada dataset ini.</p></li>
+<li><p>Meskipun SMOTE dan ADASYN memberikan hasil yang serupa dalam kasus ini, penting untuk membandingkan metrik spesifik seperti recall atau F1-score tergantung pada tujuan bisnis dari klasifikasi.</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1019,6 +1549,14 @@ Counter({&#39;im&#39;: 156, &#39;pp&#39;: 150, &#39;cp&#39;: 143, &#39;imU&#39;:
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#melakukan-penyeimbangan-menggunakan-smote"><strong>Melakukan Penyeimbangan Menggunakan Smote</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penyeimbangan-data-menggunakan-adasyn"><strong>Penyeimbangan data menggunakan ADASYN</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ploting-data-dari-data-yang-diimbangkan-menggunakan-pca-tandai-data-data-hasil-generatenya">Ploting data dari data yang diimbangkan menggunakan PCA, tandai data data hasil generatenya</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasikasi-menggunakan-naive-bayes-random-forest-dan-bagging-classifier"><strong>Klasikasi menggunakan Naive Bayes, Random Forest dan Bagging Classifier</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-pada-data-asli">Klasifikasi pada data asli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-pada-data-smote">Klasifikasi pada data smote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-pada-data-adasyn">Klasifikasi pada data adasyn</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkas-hasil">Ringkas hasil</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan:</a></li>
 </ul>
   </nav></div>
 

@@ -25,65 +25,37 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import pymysql
-import pandas as pd
-from tabulate import tabulate
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier, BaggingClassifier
 
-# Konfigurasi koneksi ke database Aiven MySQL
-host = "mysql23-112-irismysql23-112.h.aivencloud.com"
-port = 15786
-user = "avnadmin"
-password = "AVNS_cTNd4CUt1kk0Z7MPIC1"
-database = "defaultdb"
+# Inisialisasi model
+nb_model = GaussianNB()
+rf_model = RandomForestClassifier(random_state=42)
+bagging_model = BaggingClassifier(random_state=42)
 
-# Buat koneksi
-mysql_conn = pymysql.connect(
-    host=host,
-    port=port,
-    user=user,
-    password=password,
-    database=database,
-    ssl={'ssl': {}}  # Jika menggunakan SSL
-)
+# Klasifikasi data asli
+results_nb_original = perform_classification(X, y, nb_model)
+results_rf_original = perform_classification(X, y, rf_model)
+results_bagging_original = perform_classification(X, y, bagging_model)
 
-
-def fetch_mysql_data():
-    try:
-        conn = pymysql.connect(**mysql_config)
-        cursor = conn.cursor()
-        query = 'SELECT * FROM ecolipsd.ecoli_data;'
-        cursor.execute(query)
-        data = cursor.fetchall()
-        columns = [desc[0] for desc in cursor.description]
-        cursor.close()
-        conn.close()
-        df = pd.DataFrame(data, columns=columns)
-
-        return df
-    except pymysql.err.OperationalError as e:
-        print(f"Error connecting to MySQL: {e}")
-        return pd.DataFrame()
-
-
-df = fetch_mysql_data()
-print(tabulate(df, headers='keys', tablefmt='grid'))
+# Cetak hasil
+print("Hasil Klasifikasi Data Asli (Naive Bayes):")
+print(results_nb_original)
+print("\nHasil Klasifikasi Data Asli (Random Forest):")
+print(results_rf_original)
+print("\nHasil Klasifikasi Data Asli (Bagging Classifier):")
+print(results_bagging_original)
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipython-input-3066875912.py[0m in [0;36m<cell line: 0>[0;34m()[0m
-[1;32m     39[0m [0;34m[0m[0m
-[1;32m     40[0m [0;34m[0m[0m
-[0;32m---> 41[0;31m [0mdf[0m [0;34m=[0m [0mfetch_mysql_data[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     42[0m [0mprint[0m[0;34m([0m[0mtabulate[0m[0;34m([0m[0mdf[0m[0;34m,[0m [0mheaders[0m[0;34m=[0m[0;34m'keys'[0m[0;34m,[0m [0mtablefmt[0m[0;34m=[0m[0;34m'grid'[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/tmp/ipython-input-184705662.py[0m in [0;36m<cell line: 0>[0;34m()[0m
+[1;32m      8[0m [0;34m[0m[0m
+[1;32m      9[0m [0;31m# Klasifikasi data asli[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 10[0;31m [0mresults_nb_original[0m [0;34m=[0m [0mperform_classification[0m[0;34m([0m[0mX[0m[0;34m,[0m [0my[0m[0;34m,[0m [0mnb_model[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     11[0m [0mresults_rf_original[0m [0;34m=[0m [0mperform_classification[0m[0;34m([0m[0mX[0m[0;34m,[0m [0my[0m[0;34m,[0m [0mrf_model[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     12[0m [0mresults_bagging_original[0m [0;34m=[0m [0mperform_classification[0m[0;34m([0m[0mX[0m[0;34m,[0m [0my[0m[0;34m,[0m [0mbagging_model[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;32m/tmp/ipython-input-3066875912.py[0m in [0;36mfetch_mysql_data[0;34m()[0m
-[1;32m     23[0m [0;32mdef[0m [0mfetch_mysql_data[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     24[0m     [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 25[0;31m         [0mconn[0m [0;34m=[0m [0mpymysql[0m[0;34m.[0m[0mconnect[0m[0;34m([0m[0;34m**[0m[0mmysql_config[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     26[0m         [0mcursor[0m [0;34m=[0m [0mconn[0m[0;34m.[0m[0mcursor[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     27[0m         [0mquery[0m [0;34m=[0m [0;34m'SELECT * FROM ecolipsd.ecoli_data;'[0m[0;34m[0m[0;34m[0m[0m
-
-[0;31mNameError[0m: name 'mysql_config' is not defined
+[0;31mNameError[0m: name 'perform_classification' is not defined
 
