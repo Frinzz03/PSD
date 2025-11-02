@@ -402,12 +402,33 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-menggunakan-knn-regression"><strong>Modeling menggunakan KNN Regression</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-dan-h2">Modelling Data h1 dan h2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-dan-h3">Modelling Data h1, h2, dan h3</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-dan-h4">Modelling Data h1, h2, h3, dan h4</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-h4-dan-h5">Modelling Data h1 h2, h3,h4, dan h5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mape">MAPE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-dan-h2">Modelling Data h1 dan h2</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan-2-lag">MAPE dengan 2 Lag</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-dan-h3">Modelling Data h1, h2, dan h3</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan-3-lag">MAPE dengan 3 Lag</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-dan-h4">Modelling Data h1, h2, h3, dan h4</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan4-lag">MAPE dengan4 Lag</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-h4-dan-h5">Modelling Data h1 h2, h3,h4, dan h5</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan-5-lag">MAPE dengan 5 Lag</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-nilai-r2">Perbandingan Nilai R2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-mape-tiap-lag">Perbandingan MAPE tiap Lag</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-prediksi-hari-berikutnya"><strong>Hasil Prediksi Hari Berikutnya</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-kadar-no2-baik-atau-tidak">Cek Kadar NO2 Baik atau Tidak</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment"><strong>Deployment</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deployment"><strong>Hasil Deployment</strong></a></li>
 </ul>
             </nav>
         </div>
@@ -458,66 +479,61 @@ Requirement already satisfied: pandas in /usr/local/lib/python3.12/dist-packages
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting openeo
-  Downloading openeo-0.45.0-py3-none-any.whl.metadata (8.2 kB)
+  Downloading openeo-0.46.0-py3-none-any.whl.metadata (8.1 kB)
 Requirement already satisfied: numpy&gt;=1.26 in /usr/local/lib/python3.12/dist-packages (from xarray) (2.0.2)
 Requirement already satisfied: packaging&gt;=24.1 in /usr/local/lib/python3.12/dist-packages (from xarray) (25.0)
 Requirement already satisfied: python-dateutil&gt;=2.8.2 in /usr/local/lib/python3.12/dist-packages (from pandas) (2.9.0.post0)
 Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.2)
 Requirement already satisfied: tzdata&gt;=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.2)
-Requirement already satisfied: requests&gt;=2.26.0 in /usr/local/lib/python3.12/dist-packages (from openeo) (2.32.4)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: requests&gt;=2.26.0 in /usr/local/lib/python3.12/dist-packages (from openeo) (2.32.4)
 Requirement already satisfied: urllib3&gt;=1.9.0 in /usr/local/lib/python3.12/dist-packages (from openeo) (2.5.0)
 Requirement already satisfied: shapely&gt;=1.6.4 in /usr/local/lib/python3.12/dist-packages (from openeo) (2.1.2)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting xarray
+Collecting xarray
   Downloading xarray-2025.1.1-py3-none-any.whl.metadata (11 kB)
-Collecting pystac&gt;=1.5.0 (from openeo)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pystac&gt;=1.5.0 (from openeo)
   Downloading pystac-1.14.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting deprecated&gt;=1.2.12 (from openeo)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting deprecated&gt;=1.2.12 (from openeo)
-  Downloading Deprecated-1.2.18-py2.py3-none-any.whl.metadata (5.7 kB)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting wrapt&lt;2,&gt;=1.10 (from deprecated&gt;=1.2.12-&gt;openeo)
-  Downloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.4 kB)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Downloading deprecated-1.3.1-py2.py3-none-any.whl.metadata (5.9 kB)
+Requirement already satisfied: wrapt&lt;3,&gt;=1.10 in /usr/local/lib/python3.12/dist-packages (from deprecated&gt;=1.2.12-&gt;openeo) (2.0.0)
 Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
 Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /usr/local/lib/python3.12/dist-packages (from requests&gt;=2.26.0-&gt;openeo) (3.4.4)
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/local/lib/python3.12/dist-packages (from requests&gt;=2.26.0-&gt;openeo) (3.11)
 Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.12/dist-packages (from requests&gt;=2.26.0-&gt;openeo) (2025.10.5)
-Downloading openeo-0.45.0-py3-none-any.whl (335 kB)
-?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/335.1 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">335.1/335.1 kB</span> <span class=" -Color -Color-Red">10.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+Downloading openeo-0.46.0-py3-none-any.whl (335 kB)
+?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/335.2 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ <span class=" -Color -Color-Green">225.3/335.2 kB</span> <span class=" -Color -Color-Red">6.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">335.2/335.2 kB</span> <span class=" -Color -Color-Red">6.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading xarray-2025.1.1-py3-none-any.whl (1.2 MB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/1.2 MB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.2/1.2 MB</span> <span class=" -Color -Color-Red">44.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25h
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading Deprecated-1.2.18-py2.py3-none-any.whl (10.0 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ <span class=" -Color -Color-Green">1.2/1.2 MB</span> <span class=" -Color -Color-Red">44.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.2/1.2 MB</span> <span class=" -Color -Color-Red">28.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hDownloading deprecated-1.3.1-py2.py3-none-any.whl (11 kB)
 Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/207.7 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">207.7/207.7 kB</span> <span class=" -Color -Color-Red">17.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hDownloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (88 kB)
-?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/88.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">88.0/88.0 kB</span> <span class=" -Color -Color-Red">8.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">207.7/207.7 kB</span> <span class=" -Color -Color-Red">18.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: wrapt, pystac, deprecated, xarray, openeo
-  Attempting uninstall: wrapt
-    Found existing installation: wrapt 2.0.0
-    Uninstalling wrapt-2.0.0:
-      Successfully uninstalled wrapt-2.0.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: deprecated, pystac, xarray, openeo
+  Attempting uninstall: xarray
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Attempting uninstall: xarray
-    Found existing installation: xarray 2025.10.1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    Found existing installation: xarray 2025.10.1
     Uninstalling xarray-2025.10.1:
-      Successfully uninstalled xarray-2025.10.1
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully installed deprecated-1.2.18 openeo-0.45.0 pystac-1.14.1 wrapt-1.17.3 xarray-2025.1.1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Successfully uninstalled xarray-2025.10.1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully installed deprecated-1.3.1 openeo-0.46.0 pystac-1.14.1 xarray-2025.1.1
 </pre></div>
 </div>
 </div>
@@ -535,6 +551,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 <span class="kn">import</span><span class="w"> </span><span class="nn">openeo</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
 </pre></div>
 </div>
 </div>
@@ -634,7 +652,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">Visit <a href="https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=CQJA-GSXN" title="Authenticate at https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=CQJA-GSXN" target="_blank" rel="noopener noreferrer">https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=CQJA-GSXN</a> <a href="#" onclick="navigator.clipboard.writeText('https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=CQJA-GSXN');return false;" title="Copy authentication URL to clipboard">&#128203;</a> to authenticate.</div><div class="output text_html"><code>[##################################---]</code> ⌛ Authorization pending</div><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<div class="output text_html">Visit <a href="https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=FBZG-BZRC" title="Authenticate at https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=FBZG-BZRC" target="_blank" rel="noopener noreferrer">https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=FBZG-BZRC</a> <a href="#" onclick="navigator.clipboard.writeText('https://identity.dataspace.copernicus.eu/auth/realms/CDSE/device?user_code=FBZG-BZRC');return false;" title="Copy authentication URL to clipboard">&#128203;</a> to authenticate.</div><div class="output text_html"><code>[##################################---]</code> ⌛ Authorization pending</div><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
 <span class="nn">/tmp/ipython-input-3389930467.py</span> in <span class="ni">&lt;cell line: 0&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> 
@@ -644,18 +662,18 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 <span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="c1"># 2. AOI: poligon kedua dari data kamu</span>
 
 <span class="nn">/usr/local/lib/python3.12/dist-packages/openeo/rest/connection.py</span> in <span class="ni">authenticate_oidc</span><span class="nt">(self, provider_id, client_id, client_secret, store_refresh_token, use_pkce, display, max_poll_time)</span>
-<span class="g g-Whitespace">    </span><span class="mi">619</span>             <span class="n">client_info</span><span class="o">=</span><span class="n">client_info</span><span class="p">,</span> <span class="n">use_pkce</span><span class="o">=</span><span class="n">use_pkce</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">,</span> <span class="n">max_poll_time</span><span class="o">=</span><span class="n">max_poll_time</span>
-<span class="g g-Whitespace">    </span><span class="mi">620</span>         <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">621</span>         <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_authenticate_oidc</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">622</span>             <span class="n">authenticator</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">623</span>             <span class="n">provider_id</span><span class="o">=</span><span class="n">provider_id</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">635</span>             <span class="n">client_info</span><span class="o">=</span><span class="n">client_info</span><span class="p">,</span> <span class="n">use_pkce</span><span class="o">=</span><span class="n">use_pkce</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">,</span> <span class="n">max_poll_time</span><span class="o">=</span><span class="n">max_poll_time</span>
+<span class="g g-Whitespace">    </span><span class="mi">636</span>         <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">637</span>         <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_authenticate_oidc</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">638</span>             <span class="n">authenticator</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">639</span>             <span class="n">provider_id</span><span class="o">=</span><span class="n">provider_id</span><span class="p">,</span>
 
-<span class="nn">/usr/local/lib/python3.12/dist-packages/openeo/rest/connection.py</span> in <span class="ni">_authenticate_oidc</span><span class="nt">(self, authenticator, provider_id, store_refresh_token, fallback_refresh_token_to_store, oidc_auth_renewer)</span>
-<span class="g g-Whitespace">    </span><span class="mi">349</span>         <span class="n">Authenticate</span> <span class="n">through</span> <span class="n">OIDC</span> <span class="ow">and</span> <span class="nb">set</span> <span class="n">up</span> <span class="n">bearer</span> <span class="n">token</span> <span class="p">(</span><span class="n">based</span> <span class="n">on</span> <span class="n">OIDC</span> <span class="n">access_token</span><span class="p">)</span> <span class="k">for</span> <span class="n">further</span> <span class="n">requests</span><span class="o">.</span>
-<span class="g g-Whitespace">    </span><span class="mi">350</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">351</span><span class="s2">         tokens = authenticator.get_tokens(request_refresh_token=store_refresh_token)</span>
-<span class="nn">    352         _log.info(&quot;Obtained tokens: {t}&quot;.format(t=[k for k, v</span> in <span class="ni">tokens._asdict().items</span><span class="nt">() if v]))</span>
-<span class="g g-Whitespace">    </span><span class="mi">353</span><span class="s2">         if store_refresh_token:</span>
+<span class="nn">/usr/local/lib/python3.12/dist-packages/openeo/rest/connection.py</span> in <span class="ni">_authenticate_oidc</span><span class="nt">(self, authenticator, provider_id, store_refresh_token, auto_renew_from_refresh_token, fallback_refresh_token, oidc_auth_renewer)</span>
+<span class="g g-Whitespace">    </span><span class="mi">351</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span><span class="s2">         request_refresh_token = store_refresh_token or (not oidc_auth_renewer and auto_renew_from_refresh_token)</span>
+<span class="ne">--&gt; </span><span class="mi">353</span><span class="s2">         tokens = authenticator.get_tokens(request_refresh_token=request_refresh_token)</span>
+<span class="nn">    354         _log.info(&quot;Obtained tokens: {t}&quot;.format(t=[k for k, v</span> in <span class="ni">tokens._asdict().items</span><span class="nt">() if v]))</span>
+<span class="g g-Whitespace">    </span><span class="mi">355</span><span class="s2"> </span>
 
 <span class="nn">/usr/local/lib/python3.12/dist-packages/openeo/rest/auth/oidc.py</span> in <span class="ni">get_tokens</span><span class="nt">(self, request_refresh_token)</span>
 <span class="g g-Whitespace">    </span><span class="mi">912</span><span class="s2">             while elapsed() &lt;= self._max_poll_time:</span>
@@ -682,7 +700,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-217438ad-7a55-4c3f-921b-53feaf2ba353" class="colab-df-container">
+  <div id="df-82413714-7eed-409a-be58-73f22a54a8ad" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -780,7 +798,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-217438ad-7a55-4c3f-921b-53feaf2ba353')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-82413714-7eed-409a-be58-73f22a54a8ad')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -832,12 +850,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-217438ad-7a55-4c3f-921b-53feaf2ba353 button.colab-df-convert');
+        document.querySelector('#df-82413714-7eed-409a-be58-73f22a54a8ad button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-217438ad-7a55-4c3f-921b-53feaf2ba353');
+        const element = document.querySelector('#df-82413714-7eed-409a-be58-73f22a54a8ad');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -857,8 +875,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-a58fa5ab-5904-44dd-ab07-a26c7b96dc0b">
-      <button class="colab-df-quickchart" onclick="quickchart('df-a58fa5ab-5904-44dd-ab07-a26c7b96dc0b')"
+    <div id="df-c1d03d04-dec0-4144-bd31-4db1c2ed1651">
+      <button class="colab-df-quickchart" onclick="quickchart('df-c1d03d04-dec0-4144-bd31-4db1c2ed1651')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -977,14 +995,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-a58fa5ab-5904-44dd-ab07-a26c7b96dc0b button');
+            document.querySelector('#df-c1d03d04-dec0-4144-bd31-4db1c2ed1651 button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_dcac7745-d21e-46e5-8594-5dc09320da8a">
+  <div id="id_c862f5a2-5eaa-4043-96a0-967c5d8c6661">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -1028,7 +1046,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_dcac7745-d21e-46e5-8594-5dc09320da8a button.colab-df-generate');
+        document.querySelector('#id_c862f5a2-5eaa-4043-96a0-967c5d8c6661 button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -1062,7 +1080,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-836031fb-7dbf-4aff-be54-d18c75b9bf58" class="colab-df-container">
+  <div id="df-f747c7fe-c0f6-47c0-9cda-909a7307541b" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1107,7 +1125,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-836031fb-7dbf-4aff-be54-d18c75b9bf58')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f747c7fe-c0f6-47c0-9cda-909a7307541b')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1159,12 +1177,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-836031fb-7dbf-4aff-be54-d18c75b9bf58 button.colab-df-convert');
+        document.querySelector('#df-f747c7fe-c0f6-47c0-9cda-909a7307541b button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-836031fb-7dbf-4aff-be54-d18c75b9bf58');
+        const element = document.querySelector('#df-f747c7fe-c0f6-47c0-9cda-909a7307541b');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1184,8 +1202,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-0d03d135-85d5-4e6b-900d-f9bd40d67b9f">
-      <button class="colab-df-quickchart" onclick="quickchart('df-0d03d135-85d5-4e6b-900d-f9bd40d67b9f')"
+    <div id="df-a685b884-3f58-4d19-ac83-5c3ccd65b3d2">
+      <button class="colab-df-quickchart" onclick="quickchart('df-a685b884-3f58-4d19-ac83-5c3ccd65b3d2')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -1304,14 +1322,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-0d03d135-85d5-4e6b-900d-f9bd40d67b9f button');
+            document.querySelector('#df-a685b884-3f58-4d19-ac83-5c3ccd65b3d2 button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_1601e4a3-5f8a-4eea-a1c8-77904f5bb261">
+  <div id="id_b9a8fecd-a54e-4390-8d6e-787cdda88f3f">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -1355,7 +1373,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_1601e4a3-5f8a-4eea-a1c8-77904f5bb261 button.colab-df-generate');
+        document.querySelector('#id_b9a8fecd-a54e-4390-8d6e-787cdda88f3f button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -1407,7 +1425,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-7bd29792-8d95-4372-a292-10f0a75f4873" class="colab-df-container">
+  <div id="df-0ef1bd05-6096-479b-8755-23f0ad6fee35" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1493,7 +1511,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-7bd29792-8d95-4372-a292-10f0a75f4873')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-0ef1bd05-6096-479b-8755-23f0ad6fee35')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1545,12 +1563,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-7bd29792-8d95-4372-a292-10f0a75f4873 button.colab-df-convert');
+        document.querySelector('#df-0ef1bd05-6096-479b-8755-23f0ad6fee35 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-7bd29792-8d95-4372-a292-10f0a75f4873');
+        const element = document.querySelector('#df-0ef1bd05-6096-479b-8755-23f0ad6fee35');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1570,8 +1588,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-f3832b40-3d8a-4d0c-b29e-83dd04413f95">
-      <button class="colab-df-quickchart" onclick="quickchart('df-f3832b40-3d8a-4d0c-b29e-83dd04413f95')"
+    <div id="df-effb36fc-b05c-40e2-8aec-0333bef2636e">
+      <button class="colab-df-quickchart" onclick="quickchart('df-effb36fc-b05c-40e2-8aec-0333bef2636e')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -1690,14 +1708,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-f3832b40-3d8a-4d0c-b29e-83dd04413f95 button');
+            document.querySelector('#df-effb36fc-b05c-40e2-8aec-0333bef2636e button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_c5510edf-5a3a-469c-bd3c-040916c740f9">
+  <div id="id_3f17e171-b0b4-4596-97ee-8870e4382f3a">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -1741,7 +1759,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_c5510edf-5a3a-469c-bd3c-040916c740f9 button.colab-df-generate');
+        document.querySelector('#id_3f17e171-b0b4-4596-97ee-8870e4382f3a button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -1775,7 +1793,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-cd7a96a1-8aa0-451c-8bfb-668b8d754532" class="colab-df-container">
+  <div id="df-64ca8280-72c4-46d9-82cd-7aceb2dceffb" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1815,7 +1833,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-cd7a96a1-8aa0-451c-8bfb-668b8d754532')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-64ca8280-72c4-46d9-82cd-7aceb2dceffb')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1867,12 +1885,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-cd7a96a1-8aa0-451c-8bfb-668b8d754532 button.colab-df-convert');
+        document.querySelector('#df-64ca8280-72c4-46d9-82cd-7aceb2dceffb button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-cd7a96a1-8aa0-451c-8bfb-668b8d754532');
+        const element = document.querySelector('#df-64ca8280-72c4-46d9-82cd-7aceb2dceffb');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1892,8 +1910,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-d10b2e5b-f9a1-44d3-962c-f8e236feb638">
-      <button class="colab-df-quickchart" onclick="quickchart('df-d10b2e5b-f9a1-44d3-962c-f8e236feb638')"
+    <div id="df-88729657-2249-4378-b216-f06c72141eab">
+      <button class="colab-df-quickchart" onclick="quickchart('df-88729657-2249-4378-b216-f06c72141eab')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -2012,14 +2030,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-d10b2e5b-f9a1-44d3-962c-f8e236feb638 button');
+            document.querySelector('#df-88729657-2249-4378-b216-f06c72141eab button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_f77494b1-28a8-42da-9403-f72214e14216">
+  <div id="id_8026d620-ec35-4b18-b0ff-ab848ee48a62">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -2063,7 +2081,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_f77494b1-28a8-42da-9403-f72214e14216 button.colab-df-generate');
+        document.querySelector('#id_8026d620-ec35-4b18-b0ff-ab848ee48a62 button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -2113,7 +2131,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-9f95a9e0-916c-40c4-b89c-34e5153d2406" class="colab-df-container">
+  <div id="df-64905838-7bff-4ec6-828c-0f97f76f35ca" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -2211,7 +2229,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-9f95a9e0-916c-40c4-b89c-34e5153d2406')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-64905838-7bff-4ec6-828c-0f97f76f35ca')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -2263,12 +2281,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-9f95a9e0-916c-40c4-b89c-34e5153d2406 button.colab-df-convert');
+        document.querySelector('#df-64905838-7bff-4ec6-828c-0f97f76f35ca button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-9f95a9e0-916c-40c4-b89c-34e5153d2406');
+        const element = document.querySelector('#df-64905838-7bff-4ec6-828c-0f97f76f35ca');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -2288,8 +2306,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-caa63ff1-53b0-45f8-a85c-1f3f882f9b7a">
-      <button class="colab-df-quickchart" onclick="quickchart('df-caa63ff1-53b0-45f8-a85c-1f3f882f9b7a')"
+    <div id="df-cf004395-39ef-4ab6-808f-2e8ffe4dd76b">
+      <button class="colab-df-quickchart" onclick="quickchart('df-cf004395-39ef-4ab6-808f-2e8ffe4dd76b')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -2408,14 +2426,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-caa63ff1-53b0-45f8-a85c-1f3f882f9b7a button');
+            document.querySelector('#df-cf004395-39ef-4ab6-808f-2e8ffe4dd76b button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_b7dc8bf2-97c2-4783-828c-500c702cb588">
+  <div id="id_2bd5bb32-96e5-412c-bdeb-43c370a74de3">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -2459,7 +2477,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_b7dc8bf2-97c2-4783-828c-500c702cb588 button.colab-df-generate');
+        document.querySelector('#id_2bd5bb32-96e5-412c-bdeb-43c370a74de3 button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -2493,7 +2511,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-5a1febc4-ce81-41fa-9e82-c0944e131479" class="colab-df-container">
+  <div id="df-4f6b971c-9d07-44ff-b653-8ad61be4e1b0" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -2603,7 +2621,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-5a1febc4-ce81-41fa-9e82-c0944e131479')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-4f6b971c-9d07-44ff-b653-8ad61be4e1b0')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -2655,12 +2673,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-5a1febc4-ce81-41fa-9e82-c0944e131479 button.colab-df-convert');
+        document.querySelector('#df-4f6b971c-9d07-44ff-b653-8ad61be4e1b0 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-5a1febc4-ce81-41fa-9e82-c0944e131479');
+        const element = document.querySelector('#df-4f6b971c-9d07-44ff-b653-8ad61be4e1b0');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -2680,8 +2698,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-92452b3a-0584-4a27-9bbb-32d252297e75">
-      <button class="colab-df-quickchart" onclick="quickchart('df-92452b3a-0584-4a27-9bbb-32d252297e75')"
+    <div id="df-1bae950a-001e-40b8-9ddf-b8e26b5db374">
+      <button class="colab-df-quickchart" onclick="quickchart('df-1bae950a-001e-40b8-9ddf-b8e26b5db374')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -2800,14 +2818,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-92452b3a-0584-4a27-9bbb-32d252297e75 button');
+            document.querySelector('#df-1bae950a-001e-40b8-9ddf-b8e26b5db374 button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_8db00adb-1f30-4a57-acd2-e284097eab43">
+  <div id="id_007713cd-69c9-4253-859d-82f22b5d86ff">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -2851,7 +2869,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_8db00adb-1f30-4a57-acd2-e284097eab43 button.colab-df-generate');
+        document.querySelector('#id_007713cd-69c9-4253-859d-82f22b5d86ff button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -2885,7 +2903,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-acfccf65-90a7-463c-9e68-69cdfeccc29f" class="colab-df-container">
+  <div id="df-f11267e2-3e31-4479-8741-be555e82041f" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -3007,7 +3025,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-acfccf65-90a7-463c-9e68-69cdfeccc29f')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f11267e2-3e31-4479-8741-be555e82041f')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -3059,12 +3077,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-acfccf65-90a7-463c-9e68-69cdfeccc29f button.colab-df-convert');
+        document.querySelector('#df-f11267e2-3e31-4479-8741-be555e82041f button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-acfccf65-90a7-463c-9e68-69cdfeccc29f');
+        const element = document.querySelector('#df-f11267e2-3e31-4479-8741-be555e82041f');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -3084,8 +3102,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-8b1d47d5-1147-4acb-a2d4-123d6fc574fa">
-      <button class="colab-df-quickchart" onclick="quickchart('df-8b1d47d5-1147-4acb-a2d4-123d6fc574fa')"
+    <div id="df-618119b9-8e2f-40b6-902c-118ead3a59e4">
+      <button class="colab-df-quickchart" onclick="quickchart('df-618119b9-8e2f-40b6-902c-118ead3a59e4')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -3204,14 +3222,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-8b1d47d5-1147-4acb-a2d4-123d6fc574fa button');
+            document.querySelector('#df-618119b9-8e2f-40b6-902c-118ead3a59e4 button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_2fa56b0f-f6fd-47eb-b5b9-3b33abf44cf5">
+  <div id="id_11dd7d5a-7a05-495c-8339-0981598688db">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -3255,7 +3273,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_2fa56b0f-f6fd-47eb-b5b9-3b33abf44cf5 button.colab-df-generate');
+        document.querySelector('#id_11dd7d5a-7a05-495c-8339-0981598688db button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -3289,7 +3307,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-0c79525d-db15-4fd1-9aee-6b21becc9027" class="colab-df-container">
+  <div id="df-3d025c10-5f15-484f-ad82-68abc096b0f5" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -3423,7 +3441,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-0c79525d-db15-4fd1-9aee-6b21becc9027')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-3d025c10-5f15-484f-ad82-68abc096b0f5')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -3475,12 +3493,12 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
     <script>
       const buttonEl =
-        document.querySelector('#df-0c79525d-db15-4fd1-9aee-6b21becc9027 button.colab-df-convert');
+        document.querySelector('#df-3d025c10-5f15-484f-ad82-68abc096b0f5 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-0c79525d-db15-4fd1-9aee-6b21becc9027');
+        const element = document.querySelector('#df-3d025c10-5f15-484f-ad82-68abc096b0f5');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -3500,8 +3518,8 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
   </div>
 
 
-    <div id="df-69ee75b3-a8bb-4f29-ba54-441b1955bb21">
-      <button class="colab-df-quickchart" onclick="quickchart('df-69ee75b3-a8bb-4f29-ba54-441b1955bb21')"
+    <div id="df-cdbcf6f9-389d-422c-a9c1-32765ac8a2be">
+      <button class="colab-df-quickchart" onclick="quickchart('df-cdbcf6f9-389d-422c-a9c1-32765ac8a2be')"
                 title="Suggest charts"
                 style="display:none;">
 
@@ -3620,14 +3638,14 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-69ee75b3-a8bb-4f29-ba54-441b1955bb21 button');
+            document.querySelector('#df-cdbcf6f9-389d-422c-a9c1-32765ac8a2be button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
       </script>
     </div>
 
-  <div id="id_47789f45-aa5a-47a6-8f17-7e7e9ff427ce">
+  <div id="id_35eae4cd-dbfc-4e31-b435-f6e8fc401fcd">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -3671,7 +3689,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_47789f45-aa5a-47a6-8f17-7e7e9ff427ce button.colab-df-generate');
+        document.querySelector('#id_35eae4cd-dbfc-4e31-b435-f6e8fc401fcd button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -3690,6 +3708,40 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </section>
 <section id="modeling-menggunakan-knn-regression">
 <h2><strong>Modeling menggunakan KNN Regression</strong><a class="headerlink" href="#modeling-menggunakan-knn-regression" title="Link to this heading">#</a></h2>
+<section id="mape">
+<h3>MAPE<a class="headerlink" href="#mape" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Menghitung Mean Absolute Percentage Error (MAPE).</span>
+<span class="sd">    Menghindari pembagian dengan nol.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="c1"># Menghindari pembagian dengan nol (jika y_true ada yang 0)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">y_true</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="c1"># Tidak ada data valid untuk dihitung</span>
+
+    <span class="c1"># Hitung MAPE hanya pada data yang y_true-nya bukan 0</span>
+    <span class="n">mape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">y_true</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">/</span> <span class="n">y_true</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="k">return</span> <span class="n">mape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_scores</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="modelling-data-h1-dan-h2">
 <h3>Modelling Data h1 dan h2<a class="headerlink" href="#modelling-data-h1-dan-h2" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
@@ -3699,7 +3751,7 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
 <span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
 <span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
@@ -3715,12 +3767,50 @@ Downloading pystac-1.14.1-py3-none-any.whl (207 kB)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE: 2.2025801454195998e-10
-R2: 0.38529196724871373
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE: 2.1039633365340283e-10
+R2: 0.41281448201954885
 </pre></div>
 </div>
 </div>
 </div>
+<section id="mape-dengan-2-lag">
+<h4>MAPE dengan 2 Lag<a class="headerlink" href="#mape-dengan-2-lag" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Modelling Data h1 dan h2 ---</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">h2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">h2</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">scaler_h2</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler_h2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler_h2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">knn_h2</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">knn_h2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">h2_predict</span> <span class="o">=</span> <span class="n">knn_h2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># --- Perhitungan MAPE ---</span>
+<span class="n">mape_h2</span> <span class="o">=</span> <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">h2_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAPE h2: </span><span class="si">{</span><span class="n">mape_h2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Simpan Skor ---</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Lag&#39;</span><span class="p">:</span> <span class="s1">&#39;h1-h2&#39;</span><span class="p">,</span>  <span class="c1"># &lt;-- Label yang benar</span>
+    <span class="s1">&#39;MAPE&#39;</span><span class="p">:</span> <span class="n">mape_h2</span>
+<span class="p">}</span>
+<span class="n">list_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAPE h2: 20.37 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="modelling-data-h1-h2-dan-h3">
 <h3>Modelling Data h1, h2, dan h3<a class="headerlink" href="#modelling-data-h1-h2-dan-h3" title="Link to this heading">#</a></h3>
@@ -3753,6 +3843,44 @@ R2: 0.2550547712362371
 </div>
 </div>
 </div>
+<section id="mape-dengan-3-lag">
+<h4>MAPE dengan 3 Lag<a class="headerlink" href="#mape-dengan-3-lag" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Modelling Data h1 dan h3 ---</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">h3</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">h3</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">scaler_h3</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler_h3</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler_h3</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">knn_h3</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">knn_h3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">h3_predict</span> <span class="o">=</span> <span class="n">knn_h3</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># --- Perhitungan MAPE ---</span>
+<span class="n">mape_h3</span> <span class="o">=</span> <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">h3_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAPE h3: </span><span class="si">{</span><span class="n">mape_h3</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Simpan Skor ---</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Lag&#39;</span><span class="p">:</span> <span class="s1">&#39;h1-h3&#39;</span><span class="p">,</span>  <span class="c1"># &lt;-- Label yang benar</span>
+    <span class="s1">&#39;MAPE&#39;</span><span class="p">:</span> <span class="n">mape_h3</span>
+<span class="p">}</span>
+<span class="n">list_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAPE h3: 20.80 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="modelling-data-h1-h2-h3-dan-h4">
 <h3>Modelling Data h1, h2, h3, dan h4<a class="headerlink" href="#modelling-data-h1-h2-h3-dan-h4" title="Link to this heading">#</a></h3>
@@ -3785,6 +3913,44 @@ R2: 0.44348718818661326
 </div>
 </div>
 </div>
+<section id="mape-dengan4-lag">
+<h4>MAPE dengan4 Lag<a class="headerlink" href="#mape-dengan4-lag" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Modelling Data h1 dan h4 ---</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">h4</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">h4</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">scaler_h4</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler_h4</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler_h4</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">knn_h4</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">knn_h4</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">h4_predict</span> <span class="o">=</span> <span class="n">knn_h4</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># --- Perhitungan MAPE ---</span>
+<span class="n">mape_h4</span> <span class="o">=</span> <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">h4_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAPE h4: </span><span class="si">{</span><span class="n">mape_h4</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Simpan Skor ---</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Lag&#39;</span><span class="p">:</span> <span class="s1">&#39;h1-h4&#39;</span><span class="p">,</span>  <span class="c1"># &lt;-- Label yang benar</span>
+    <span class="s1">&#39;MAPE&#39;</span><span class="p">:</span> <span class="n">mape_h4</span>
+<span class="p">}</span>
+<span class="n">list_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAPE h4: 25.14 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="modelling-data-h1-h2-h3-h4-dan-h5">
 <h3>Modelling Data h1 h2, h3,h4, dan h5<a class="headerlink" href="#modelling-data-h1-h2-h3-h4-dan-h5" title="Link to this heading">#</a></h3>
@@ -3817,7 +3983,321 @@ R2: 0.30492905057494923
 </div>
 </div>
 </div>
+<section id="mape-dengan-5-lag">
+<h4>MAPE dengan 5 Lag<a class="headerlink" href="#mape-dengan-5-lag" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Modelling Data h1 dan h5 ---</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">h5</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">h5</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">scaler_h5</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler_h5</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler_h5</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">knn_h5</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">knn_h5</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">h5_predict</span> <span class="o">=</span> <span class="n">knn_h5</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># --- Perhitungan MAPE ---</span>
+<span class="n">mape_h5</span> <span class="o">=</span> <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">h5_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAPE h5: </span><span class="si">{</span><span class="n">mape_h5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Simpan Skor ---</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Lag&#39;</span><span class="p">:</span> <span class="s1">&#39;h1-h5&#39;</span><span class="p">,</span>  <span class="c1"># &lt;-- Label yang benar</span>
+    <span class="s1">&#39;MAPE&#39;</span><span class="p">:</span> <span class="n">mape_h5</span>
+<span class="p">}</span>
+<span class="n">list_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAPE h5: 24.84 %
+</pre></div>
+</div>
+</div>
+</div>
 </section>
+</section>
+<section id="perbandingan-nilai-r2">
+<h3>Perbandingan Nilai R2<a class="headerlink" href="#perbandingan-nilai-r2" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2 Hari&#39;</span><span class="p">,</span> <span class="s1">&#39;3 Hari&#39;</span><span class="p">,</span> <span class="s1">&#39;4 Hari&#39;</span><span class="p">,</span> <span class="s1">&#39;5 Hari&#39;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">r2_h2</span><span class="p">,</span> <span class="n">r2_h3</span><span class="p">,</span> <span class="n">r2_h4</span><span class="p">,</span> <span class="n">r2_h5</span><span class="p">]</span>
+<span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Perbandingan Nilai R² berdasarkan Lag&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Hari&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Nilai R²&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">bar_label</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9c99cb25d96d15f92da4cf7fac9d8329b5f5f66e39552ba52599cf179ed09707.png" src="_images/9c99cb25d96d15f92da4cf7fac9d8329b5f5f66e39552ba52599cf179ed09707.png" />
+</div>
+</div>
+</section>
+<section id="perbandingan-mape-tiap-lag">
+<h3>Perbandingan MAPE tiap Lag<a class="headerlink" href="#perbandingan-mape-tiap-lag" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Mengubah list of dictionaries menjadi DataFrame</span>
+    <span class="n">scores_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">list_scores</span><span class="p">)</span>
+
+    <span class="c1"># --- Membuat Bar Chart ---</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+    <span class="c1"># Gunakan &#39;scores_df&#39; (bukan scores_df_sorted) untuk plotting</span>
+    <span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">scores_df</span><span class="p">[</span><span class="s1">&#39;Lag&#39;</span><span class="p">],</span> <span class="n">scores_df</span><span class="p">[</span><span class="s1">&#39;MAPE&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MAPE (%)&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Menambahkan label nilai di atas setiap bar</span>
+    <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+        <span class="n">yval</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+        <span class="c1"># Menampilkan nilai MAPE dengan 2 angka desimal</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">yval</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">yval</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Perbandingan MAPE untuk Setiap Model (Lag)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Model (Jumlah Lag)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean Absolute Percentage Error (MAPE) %&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Atur batas Y (menggunakan scores_df)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">scores_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores_df</span><span class="p">[</span><span class="s1">&#39;MAPE&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># Batas default jika data kosong</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+
+    <span class="c1"># Menampilkan tabel data (menggunakan scores_df)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data yang Digunakan untuk Chart (Urutan Eksekusi):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">scores_df</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s2">&quot;.4f&quot;</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># &lt;-- Menampilkan chart</span>
+
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- ERROR ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabel &#39;list_scores&#39; belum terdefinisi.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pastikan Anda sudah menjalankan cell-cell modelling (h2, h3, h4, h5) sebelumnya.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Terjadi error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pastikan &#39;list_scores&#39; Anda berisi data yang valid.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data yang Digunakan untuk Chart (Urutan Eksekusi):
+| Lag   |    MAPE |
+|:------|--------:|
+| h1-h2 | 20.3748 |
+| h1-h3 | 20.8014 |
+| h1-h4 | 25.1447 |
+| h1-h5 | 24.8356 |
+</pre></div>
+</div>
+<img alt="_images/778c7522ed02eafb239dd22b6eb0ff1b1c2696aef8f165a7395775aa34c8f512.png" src="_images/778c7522ed02eafb239dd22b6eb0ff1b1c2696aef8f165a7395775aa34c8f512.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="hasil-prediksi-hari-berikutnya">
+<h2><strong>Hasil Prediksi Hari Berikutnya</strong><a class="headerlink" href="#hasil-prediksi-hari-berikutnya" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Prediksi Hari Berikutnya (Versi Perbaikan) ---</span>
+
+<span class="c1"># 1. Ambil 3 nilai NO2 terakhir</span>
+<span class="n">last_3_values</span> <span class="o">=</span> <span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data input (3 hari terakhir)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. TENTUKAN NAMA FITUR (sesuai dengan model h1-h3)</span>
+<span class="c1">#    (Ini adalah kolom X dari cell modelling h3 Anda)</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;h1&#39;</span><span class="p">,</span> <span class="s1">&#39;h2&#39;</span><span class="p">,</span> <span class="s1">&#39;h3&#39;</span><span class="p">]</span>
+
+<span class="c1"># 3. Ubah input menjadi DataFrame DENGAN NAMA FITUR</span>
+<span class="n">input_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">last_3_values</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+
+<span class="c1"># 4. Scale data input menggunakan scaler yang sesuai (scaler_h3)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Sekarang scaler akan melihat nama kolom dan tidak akan warning</span>
+    <span class="n">input_data_scaled</span> <span class="o">=</span> <span class="n">scaler_h3</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span>
+
+    <span class="c1"># 5. Buat prediksi menggunakan model terbaik Anda (knn_h3)</span>
+    <span class="n">predicted_no2</span> <span class="o">=</span> <span class="n">knn_h3</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_data_scaled</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- HASIL PREDIKSI ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediksi konsentrasi NO2 untuk hari berikutnya adalah: </span><span class="si">{</span><span class="n">predicted_no2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- ERROR ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. Pastikan variabel &#39;scaler_h3&#39; dan &#39;knn_h3&#39; sudah terdefinisi&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dari cell modelling h1-h3 Anda.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Terjadi error lain: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data input (3 hari terakhir)
+
+--- HASIL PREDIKSI ---
+Prediksi konsentrasi NO2 untuk hari berikutnya adalah: 0.00004931
+</pre></div>
+</div>
+</div>
+</div>
+<section id="cek-kadar-no2-baik-atau-tidak">
+<h3>Cek Kadar NO2 Baik atau Tidak<a class="headerlink" href="#cek-kadar-no2-baik-atau-tidak" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Asumsi &#39;predicted_no2&#39; adalah list/array berisi [0.00003765]</span>
+<span class="c1"># Asumsi &#39;new_df&#39; adalah DataFrame Anda yang sudah bersih</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pred_value</span> <span class="o">=</span> <span class="n">predicted_no2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># 1. Hitung ambang batas statistik dari data historis Anda (new_df)</span>
+
+    <span class="c1"># Median (50% data berada di bawah nilai ini)</span>
+    <span class="n">median_val</span> <span class="o">=</span> <span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.50</span><span class="p">)</span>
+
+    <span class="c1"># Kuantil Atas (75% data berada di bawah nilai ini)</span>
+    <span class="n">upper_quantile_val</span> <span class="o">=</span> <span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nilai Prediksi </span><span class="se">\t\t</span><span class="s2">: </span><span class="si">{</span><span class="n">pred_value</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2"> mol/m^2&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median Historis (Batas &#39;Baik&#39;)</span><span class="se">\t</span><span class="s2">: </span><span class="si">{</span><span class="n">median_val</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2"> mol/m^2&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kuantil Atas (Batas &#39;Sedang&#39;)</span><span class="se">\t</span><span class="s2">: </span><span class="si">{</span><span class="n">upper_quantile_val</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2"> mol/m^2&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 2. Buat kategori berdasarkan perbandingan</span>
+    <span class="k">if</span> <span class="n">pred_value</span> <span class="o">&lt;=</span> <span class="n">median_val</span><span class="p">:</span>
+        <span class="n">kategori</span> <span class="o">=</span> <span class="s2">&quot;Baik&quot;</span>
+        <span class="n">penjelasan</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Nilai ini berada di bawah atau sama dengan batas baik.&quot;</span>
+    <span class="k">elif</span> <span class="n">pred_value</span> <span class="o">&lt;=</span> <span class="n">upper_quantile_val</span><span class="p">:</span>
+        <span class="n">kategori</span> <span class="o">=</span> <span class="s2">&quot;Sedang&quot;</span>
+        <span class="n">penjelasan</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Nilai ini di atas median, tapi di bawah kuantil atas (</span><span class="si">{</span><span class="n">upper_quantile_val</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">).&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">kategori</span> <span class="o">=</span> <span class="s2">&quot;Tinggi (Tidak Baik)&quot;</span>
+        <span class="n">penjelasan</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Nilai ini berada di atas 75% dari data historis Anda (lebih tinggi dari </span><span class="si">{</span><span class="n">upper_quantile_val</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">).&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">-------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kategori Prediksi : **</span><span class="si">{</span><span class="n">kategori</span><span class="si">}</span><span class="s2">**&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Penjelasan: </span><span class="si">{</span><span class="n">penjelasan</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------------&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Pastikan variabel &#39;predicted_no2&#39; dan &#39;new_df&#39; sudah ada.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Terjadi error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nilai Prediksi 		: 0.00004931 mol/m^2
+Median Historis (Batas &#39;Baik&#39;)	: 0.00005159 mol/m^2
+Kuantil Atas (Batas &#39;Sedang&#39;)	: 0.00006595 mol/m^2
+
+-------------------------------------------------
+Kategori Prediksi : **Baik**
+Penjelasan: Nilai ini berada di bawah atau sama dengan batas baik.
+-------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="deployment">
+<h2><strong>Deployment</strong><a class="headerlink" href="#deployment" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;no2_data.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">knn_h3</span><span class="p">,</span> <span class="s1">&#39;knn_model.joblib&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;knn_model.joblib&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler_h3</span><span class="p">,</span> <span class="s1">&#39;scaler.joblib&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;scaler.joblib&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># --- Ekspor Model h2 ---</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">knn_h2</span><span class="p">,</span> <span class="s1">&#39;knn_model_h2.joblib&#39;</span><span class="p">)</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler_h2</span><span class="p">,</span> <span class="s1">&#39;scaler_h2.joblib&#39;</span><span class="p">)</span>
+
+    <span class="c1"># --- Ekspor Model h3 ---</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">knn_h3</span><span class="p">,</span> <span class="s1">&#39;knn_model_h3.joblib&#39;</span><span class="p">)</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler_h3</span><span class="p">,</span> <span class="s1">&#39;scaler_h3.joblib&#39;</span><span class="p">)</span>
+
+    <span class="c1"># --- Ekspor Model h4 ---</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">knn_h4</span><span class="p">,</span> <span class="s1">&#39;knn_model_h4.joblib&#39;</span><span class="p">)</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler_h4</span><span class="p">,</span> <span class="s1">&#39;scaler_h4.joblib&#39;</span><span class="p">)</span>
+
+    <span class="c1"># --- Ekspor Model h5 ---</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">knn_h5</span><span class="p">,</span> <span class="s1">&#39;knn_model_h5.joblib&#39;</span><span class="p">)</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler_h5</span><span class="p">,</span> <span class="s1">&#39;scaler_h5.joblib&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BERHASIL! 8 file model/scaler telah diekspor.&quot;</span><span class="p">)</span>
+    <span class="c1"># (Pastikan no2_data.csv juga sudah diekspor)</span>
+
+<span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- ERROR ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variabel tidak ditemukan: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pastikan Anda sudah menjalankan semua cell modelling (h2-h5) dan&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;nama variabelnya adalah knn_h2, scaler_h2, knn_h3, scaler_h3, dst.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BERHASIL! 8 file model/scaler telah diekspor.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="hasil-deployment">
+<h2><strong>Hasil Deployment</strong><a class="headerlink" href="#hasil-deployment" title="Link to this heading">#</a></h2>
+<p>Hasil deploy bisa di akses melalui tautan <a class="reference external" href="https://prediksino2.streamlit.app/">https://prediksino2.streamlit.app/</a>, didalamnya terdapat</p>
+<ul class="simple">
+<li><p>Hasil prediksi NO2 otomatis di wilayah Sidoarjo dan sekitarnya</p></li>
+<li><p>Prediksi NO2 Manual (input) di wilayah Sidoarjo dan sekitarnya</p></li>
+</ul>
 </section>
 </section>
 
@@ -3894,12 +4374,33 @@ R2: 0.30492905057494923
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-menggunakan-knn-regression"><strong>Modeling menggunakan KNN Regression</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-dan-h2">Modelling Data h1 dan h2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-dan-h3">Modelling Data h1, h2, dan h3</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-dan-h4">Modelling Data h1, h2, h3, dan h4</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-h4-dan-h5">Modelling Data h1 h2, h3,h4, dan h5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mape">MAPE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-dan-h2">Modelling Data h1 dan h2</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan-2-lag">MAPE dengan 2 Lag</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-dan-h3">Modelling Data h1, h2, dan h3</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan-3-lag">MAPE dengan 3 Lag</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-dan-h4">Modelling Data h1, h2, h3, dan h4</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan4-lag">MAPE dengan4 Lag</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-data-h1-h2-h3-h4-dan-h5">Modelling Data h1 h2, h3,h4, dan h5</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mape-dengan-5-lag">MAPE dengan 5 Lag</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-nilai-r2">Perbandingan Nilai R2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-mape-tiap-lag">Perbandingan MAPE tiap Lag</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-prediksi-hari-berikutnya"><strong>Hasil Prediksi Hari Berikutnya</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-kadar-no2-baik-atau-tidak">Cek Kadar NO2 Baik atau Tidak</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment"><strong>Deployment</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deployment"><strong>Hasil Deployment</strong></a></li>
 </ul>
   </nav></div>
 
